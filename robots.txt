@@ -1,0 +1,7 @@
+# Creodrop robots.txt
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://creodrop.com/sitemap.xml
