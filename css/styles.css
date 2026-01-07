@@ -108,13 +108,21 @@ input, button {
 }
 
 .logo {
-    display: block;
-    width: 160px;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
     height: auto;
+    text-decoration: none;
 }
 
-.logo img {
-    width: 100%;
+.logo-icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+}
+
+.logo-wordmark {
+    width: 120px;
     height: auto;
 }
 
