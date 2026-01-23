@@ -1,0 +1,155 @@
+---
+// DocsSearch component - uses Pagefind for static site search
+---
+
+<div class="docs-search">
+  <div class="docs-search-input-wrapper">
+    <svg class="docs-search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"></circle>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+    <input
+      type="search"
+      id="docs-search-input"
+      class="docs-search-input"
+      placeholder="Search docs..."
+      aria-label="Search documentation"
+    />
+    <kbd class="docs-search-shortcut">
+      <span class="docs-search-shortcut-key">⌘</span>K
+    </kbd>
+  </div>
+  <div id="docs-search-results" class="docs-search-results" hidden></div>
+</div>
+
+<script>
+  async function initSearch() {
+    const input = document.getElementById('docs-search-input') as HTMLInputElement;
+    const resultsContainer = document.getElementById('docs-search-results');
+
+    if (!input || !resultsContainer) return;
+
+    let pagefind: any;
+
+    // Lazy load Pagefind
+    async function loadPagefind() {
+      if (pagefind) return pagefind;
+      try {
+        // Use @vite-ignore to prevent Vite from trying to resolve this at build time
+        // Pagefind is generated post-build and served from /pagefind/
+        const pagefindPath = '/pagefind/pagefind.js';
+        pagefind = await import(/* @vite-ignore */ pagefindPath);
+        await pagefind.init();
+        return pagefind;
+      } catch (e) {
+        console.warn('Pagefind not available - run build first to generate search index');
+        return null;
+      }
+    }
+
+    // Debounce function
+    function debounce<T extends (...args: any[]) => void>(fn: T, delay: number) {
+      let timeoutId: ReturnType<typeof setTimeout>;
+      return (...args: Parameters<T>) => {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => fn(...args), delay);
+      };
+    }
+
+    // Search function
+    async function search(query: string) {
+      if (!query.trim()) {
+        resultsContainer.hidden = true;
+        resultsContainer.innerHTML = '';
+        return;
+      }
+
+      const pf = await loadPagefind();
+      if (!pf) {
+        resultsContainer.innerHTML = '<div class="docs-search-no-results">Search unavailable in dev mode</div>';
+        resultsContainer.hidden = false;
+        return;
+      }
+
+      const results = await pf.search(query);
+
+      if (results.results.length === 0) {
+        resultsContainer.innerHTML = '<div class="docs-search-no-results">No results found</div>';
+        resultsContainer.hidden = false;
+        return;
+      }
+
+      // Load first 5 results
+      const items = await Promise.all(
+        results.results.slice(0, 5).map((r: any) => r.data())
+      );
+
+      resultsContainer.innerHTML = items.map((item: any) => `
+        <a href="${item.url}" class="docs-search-result">
+          <span class="docs-search-result-title">${item.meta.title || 'Untitled'}</span>
+          <span class="docs-search-result-excerpt">${item.excerpt}</span>
+        </a>
+      `).join('');
+
+      resultsContainer.hidden = false;
+    }
+
+    const debouncedSearch = debounce(search, 200);
+
+    input.addEventListener('input', () => {
+      debouncedSearch(input.value);
+    });
+
+    // Close results when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!input.contains(e.target as Node) && !resultsContainer.contains(e.target as Node)) {
+        resultsContainer.hidden = true;
+      }
+    });
+
+    // Focus on input when showing results
+    input.addEventListener('focus', () => {
+      if (input.value.trim()) {
+        debouncedSearch(input.value);
+      }
+    });
+
+    // Keyboard shortcut (Cmd/Ctrl + K)
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        input.focus();
+      }
+      // Escape to close
+      if (e.key === 'Escape') {
+        resultsContainer.hidden = true;
+        input.blur();
+      }
+    });
+
+    // Keyboard navigation in results
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        const results = resultsContainer.querySelectorAll('.docs-search-result');
+        const focused = resultsContainer.querySelector('.docs-search-result:focus');
+
+        if (results.length === 0) return;
+
+        if (!focused) {
+          (results[0] as HTMLElement).focus();
+        } else {
+          const currentIndex = Array.from(results).indexOf(focused);
+          const nextIndex = e.key === 'ArrowDown'
+            ? (currentIndex + 1) % results.length
+            : (currentIndex - 1 + results.length) % results.length;
+          (results[nextIndex] as HTMLElement).focus();
+        }
+      }
+    });
+  }
+
+  // Initialize on page load and after navigation
+  initSearch();
+  document.addEventListener('astro:after-swap', initSearch);
+</script>

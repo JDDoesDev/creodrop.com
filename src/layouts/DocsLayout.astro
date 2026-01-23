@@ -1,0 +1,129 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import DocsSidebar from '../components/DocsSidebar.astro';
+import DocsSearch from '../components/DocsSearch.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  section: string;
+  slug: string;
+  prevDoc?: { slug: string; title: string } | null;
+  nextDoc?: { slug: string; title: string } | null;
+}
+
+const { title, description, section, slug, prevDoc, nextDoc } = Astro.props;
+const canonical = `https://creodrop.com/docs/${slug}`;
+
+// Section labels for breadcrumb
+const sectionLabels: Record<string, string> = {
+  'getting-started': 'Getting Started',
+  'dashboard': 'Dashboard',
+  'sites': 'Sites',
+  'settings': 'Settings',
+};
+
+// JSON-LD structured data for TechArticle
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'TechArticle',
+    'headline': title,
+    'description': description,
+    'author': {
+      '@type': 'Organization',
+      'name': 'Creodrop',
+    },
+    'publisher': {
+      '@type': 'Organization',
+      'name': 'Creodrop',
+      'url': 'https://creodrop.com',
+    },
+    'mainEntityOfPage': canonical,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      {
+        '@type': 'ListItem',
+        'position': 1,
+        'name': 'Home',
+        'item': 'https://creodrop.com',
+      },
+      {
+        '@type': 'ListItem',
+        'position': 2,
+        'name': 'Docs',
+        'item': 'https://creodrop.com/docs',
+      },
+      {
+        '@type': 'ListItem',
+        'position': 3,
+        'name': sectionLabels[section] || section,
+        'item': `https://creodrop.com/docs/${section}`,
+      },
+      {
+        '@type': 'ListItem',
+        'position': 4,
+        'name': title,
+        'item': canonical,
+      },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={`${title} | Creodrop Docs`}
+  description={description}
+  canonical={canonical}
+  jsonLd={jsonLd}
+>
+  <Header />
+  <div class="docs-layout">
+    <DocsSidebar currentSlug={slug} />
+    <main class="docs-main">
+      <div class="docs-search-wrapper">
+        <DocsSearch />
+      </div>
+      <nav class="docs-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="docs-breadcrumb-separator">/</span>
+        <a href="/docs">Docs</a>
+        <span class="docs-breadcrumb-separator">/</span>
+        <span>{sectionLabels[section] || section}</span>
+        <span class="docs-breadcrumb-separator">/</span>
+        <span aria-current="page">{title}</span>
+      </nav>
+      <article class="docs-content">
+        <header class="docs-header">
+          <h1>{title}</h1>
+          <p class="docs-description">{description}</p>
+        </header>
+        <div class="docs-body blog-post-content">
+          <slot />
+        </div>
+      </article>
+      {(prevDoc || nextDoc) && (
+        <nav class="docs-pagination" aria-label="Documentation navigation">
+          {prevDoc ? (
+            <a href={`/docs/${prevDoc.slug}`} class="docs-pagination-link docs-pagination-prev">
+              <span class="docs-pagination-label">Previous</span>
+              <span class="docs-pagination-title">{prevDoc.title}</span>
+            </a>
+          ) : <div />}
+          {nextDoc ? (
+            <a href={`/docs/${nextDoc.slug}`} class="docs-pagination-link docs-pagination-next">
+              <span class="docs-pagination-label">Next</span>
+              <span class="docs-pagination-title">{nextDoc.title}</span>
+            </a>
+          ) : <div />}
+        </nav>
+      )}
+    </main>
+  </div>
+  <Footer />
+</BaseLayout>

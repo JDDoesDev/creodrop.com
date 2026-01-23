@@ -1,0 +1,28 @@
+---
+interface Props {
+  class?: string;
+  showNote?: boolean;
+}
+
+const { class: className = '', showNote = false } = Astro.props;
+---
+
+<form
+  action="https://buttondown.com/api/emails/embed-subscribe/creodrop"
+  method="post"
+  target="popupwindow"
+  onsubmit="window.open('https://buttondown.com/creodrop', 'popupwindow')"
+  class:list={['form', className]}
+>
+  <div class="form-group">
+    <input
+      type="email"
+      name="email"
+      placeholder="you@example.com"
+      required
+      class="input"
+    />
+    <button type="submit" class="button">Join the Beta</button>
+  </div>
+  {showNote && <p class="form-note">Get notified when Creodrop goes live.</p>}
+</form>

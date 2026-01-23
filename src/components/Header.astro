@@ -1,0 +1,66 @@
+---
+// Navigation links - add new pages here
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/docs', label: 'Docs' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/roadmap', label: 'Roadmap' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="header">
+  <div class="container header-inner">
+    <a href="/" class="logo" aria-label="Creodrop home">
+      <img src="/images/creo-logo.svg" alt="" class="logo-icon" />
+      <img
+        src="/images/logo.svg"
+        alt="Creodrop"
+        class="logo-wordmark logo-light"
+      />
+      <img
+        src="/images/logo-dark.svg"
+        alt="Creodrop"
+        class="logo-wordmark logo-dark"
+      />
+    </a>
+
+    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+    </button>
+
+    <nav class="nav" aria-label="Main navigation">
+      <ul class="nav-list">
+        {navLinks.map(({ href, label }) => {
+          const isActive = currentPath === href ||
+            (href !== '/' && currentPath.startsWith(href));
+          return (
+            <li class="nav-item">
+              <a
+                href={href}
+                class:list={['nav-link', { 'nav-link--active': isActive }]}
+                aria-current={isActive ? 'page' : undefined}
+              >
+                {label}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const navToggle = document.querySelector('.nav-toggle');
+  const nav = document.querySelector('.nav');
+
+  navToggle?.addEventListener('click', () => {
+    const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+    navToggle.setAttribute('aria-expanded', String(!isExpanded));
+    nav?.classList.toggle('nav--open');
+  });
+</script>

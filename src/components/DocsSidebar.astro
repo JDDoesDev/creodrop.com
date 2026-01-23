@@ -1,0 +1,81 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+  currentSlug?: string;
+}
+
+const { currentSlug } = Astro.props;
+
+// Get all non-draft docs
+const allDocs = await getCollection('docs', ({ data }) => !data.draft);
+
+// Define sections with labels
+const sections = [
+  { id: 'getting-started', label: 'Getting Started' },
+  { id: 'dashboard', label: 'Dashboard' },
+  { id: 'sites', label: 'Sites' },
+  { id: 'settings', label: 'Settings' },
+] as const;
+
+// Group docs by section and sort by order
+const docsBySection = sections.map(section => ({
+  ...section,
+  docs: allDocs
+    .filter(doc => doc.data.section === section.id)
+    .sort((a, b) => a.data.order - b.data.order),
+}));
+---
+
+<aside class="docs-sidebar">
+  <button class="docs-sidebar-toggle" aria-label="Toggle documentation menu" aria-expanded="false">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+    <span>Menu</span>
+  </button>
+
+  <nav class="docs-nav" aria-label="Documentation navigation">
+    {docsBySection.map(section => (
+      section.docs.length > 0 && (
+        <div class="docs-nav-section">
+          <h3 class="docs-nav-section-title">{section.label}</h3>
+          <ul class="docs-nav-list">
+            {section.docs.map(doc => {
+              const isActive = currentSlug === doc.slug;
+              return (
+                <li>
+                  <a
+                    href={`/docs/${doc.slug}`}
+                    class:list={['docs-nav-link', { 'docs-nav-link--active': isActive }]}
+                    aria-current={isActive ? 'page' : undefined}
+                  >
+                    {doc.data.title}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )
+    ))}
+  </nav>
+</aside>
+
+<script>
+  function initSidebar() {
+    const toggle = document.querySelector('.docs-sidebar-toggle');
+    const nav = document.querySelector('.docs-nav');
+
+    toggle?.addEventListener('click', () => {
+      const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!isExpanded));
+      nav?.classList.toggle('docs-nav--open');
+    });
+  }
+
+  initSidebar();
+  document.addEventListener('astro:after-swap', initSidebar);
+</script>

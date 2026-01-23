@@ -1,98 +1,89 @@
 # Creodrop Landing Page
 
-Pre-launch landing page for [creodrop.com](https://creodrop.com).
+Pre-launch landing page and blog for [creodrop.com](https://creodrop.com), built with [Astro](https://astro.build).
+
+## Prerequisites
+
+- [mise](https://mise.jdx.dev/) for runtime management
 
 ## Setup
 
-### 1. Create GitHub Repository
+```bash
+mise install      # Install Node.js and pnpm
+pnpm install      # Install dependencies
+```
 
-Create a new repo (e.g., `creodrop-landing` or just `creodrop.com`).
-
-### 2. Configure Buttondown
-
-1. Sign up at [buttondown.com](https://buttondown.com)
-2. Go to **Settings → Embedding**
-3. Copy your username
-4. Replace `YOUR_USERNAME` in `index.html` (appears twice in the form actions)
-
-### 3. Push to GitHub
+## Development
 
 ```bash
-git init
-git add .
-git commit -m "Initial landing page"
-git branch -M main
-git remote add origin git@github.com:YOUR_USERNAME/YOUR_REPO.git
-git push -u origin main
+pnpm dev          # Start dev server at localhost:4321
+pnpm build        # Build for production
+pnpm preview      # Preview production build
 ```
 
-### 4. Enable GitHub Pages
+## Creating Blog Posts
 
-1. Go to repo **Settings → Pages**
-2. Source: **Deploy from a branch**
-3. Branch: **main** / **/ (root)**
-4. Save
+```bash
+pnpm new-post "Your Post Title"
+```
 
-### 5. Configure Custom Domain
+This creates a new markdown file in `src/content/blog/` with frontmatter template. Edit the file and set `draft: false` when ready to publish.
 
-#### In GitHub:
-The `CNAME` file is already set to `creodrop.com`.
+## Project Structure
 
-#### In your DNS provider:
-Add these records:
+```
+src/
+├── components/        # Reusable Astro components
+│   ├── Header.astro
+│   ├── Footer.astro
+│   ├── ButtondownForm.astro
+│   └── icons/         # SVG icons
+├── layouts/
+│   ├── BaseLayout.astro    # HTML shell, meta tags
+│   ├── PageLayout.astro    # Header + Footer wrapper
+│   └── BlogLayout.astro    # Blog post template
+├── pages/
+│   ├── index.astro         # Landing page
+│   ├── roadmap.astro       # Product roadmap
+│   ├── rss.xml.js          # RSS feed
+│   └── blog/               # Blog pages
+├── content/
+│   └── blog/               # Markdown blog posts
+└── styles/
+    └── global.css          # All styling
+public/
+├── images/                 # Static assets
+├── CNAME                   # GitHub Pages domain
+└── robots.txt
+```
 
-**For apex domain (creodrop.com):**
+## Deployment
+
+Push to `main` branch — GitHub Actions automatically builds and deploys to GitHub Pages.
+
+### Custom Domain Setup
+
+The `CNAME` file is set to `creodrop.com`. DNS records needed:
+
+**Apex domain (creodrop.com):**
 ```
 Type: A
 Name: @
-Value: 185.199.108.153
-
-Type: A
-Name: @
-Value: 185.199.109.153
-
-Type: A
-Name: @
-Value: 185.199.110.153
-
-Type: A
-Name: @
-Value: 185.199.111.153
+Values: 185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153
 ```
 
-**For www subdomain:**
+**www subdomain:**
 ```
 Type: CNAME
 Name: www
 Value: YOUR_USERNAME.github.io
 ```
 
-### 6. Enable HTTPS
-
-Once DNS propagates (can take up to 24 hours):
-1. Go to repo **Settings → Pages**
-2. Check **Enforce HTTPS**
-
-## File Structure
-
-```
-creodrop-landing/
-├── index.html          # Main page
-├── css/
-│   └── styles.css      # Styles
-├── images/
-│   ├── logo.svg        # Light mode logo
-│   ├── logo-dark.svg   # Dark mode logo
-│   └── favicon.svg     # Browser favicon
-├── CNAME               # Custom domain config
-└── README.md           # This file
-```
-
 ## Customization
 
 ### Colors
 
-Edit CSS variables in `css/styles.css`:
+Edit CSS variables in `src/styles/global.css`:
 
 ```css
 :root {
@@ -102,26 +93,9 @@ Edit CSS variables in `css/styles.css`:
 }
 ```
 
-### Content
+### Email Signup
 
-Edit `index.html` to change:
-- Tagline and descriptions
-- Feature blocks
-- How it works steps
-
-## Local Development
-
-Just open `index.html` in a browser. No build step required.
-
-For live reload, use any simple server:
-
-```bash
-# Python
-python -m http.server 8000
-
-# Node (npx)
-npx serve
-```
+Buttondown integration is configured in `src/components/ButtondownForm.astro`. Update the form action URL to change the newsletter account.
 
 ## License
 

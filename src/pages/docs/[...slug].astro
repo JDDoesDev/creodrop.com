@@ -1,0 +1,50 @@
+---
+import { getCollection } from 'astro:content';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+
+export async function getStaticPaths() {
+  const allDocs = await getCollection('docs', ({ data }) => !data.draft);
+
+  // Sort all docs by section and order to determine prev/next
+  const sortedDocs = allDocs.sort((a, b) => {
+    const sectionOrder = ['getting-started', 'dashboard', 'sites', 'settings'];
+    const sectionDiff = sectionOrder.indexOf(a.data.section) - sectionOrder.indexOf(b.data.section);
+    if (sectionDiff !== 0) return sectionDiff;
+    return a.data.order - b.data.order;
+  });
+
+  return sortedDocs.map((doc, index) => {
+    const prevDoc = index > 0 ? sortedDocs[index - 1] : null;
+    const nextDoc = index < sortedDocs.length - 1 ? sortedDocs[index + 1] : null;
+
+    return {
+      params: { slug: doc.slug },
+      props: {
+        doc,
+        prevDoc: prevDoc ? { slug: prevDoc.slug, title: prevDoc.data.title } : null,
+        nextDoc: nextDoc ? { slug: nextDoc.slug, title: nextDoc.data.title } : null,
+      },
+    };
+  });
+}
+
+interface Props {
+  doc: Awaited<ReturnType<typeof getCollection<'docs'>>>[number];
+  prevDoc: { slug: string; title: string } | null;
+  nextDoc: { slug: string; title: string } | null;
+}
+
+const { doc, prevDoc, nextDoc } = Astro.props;
+const { Content } = await doc.render();
+---
+
+<DocsLayout
+  title={doc.data.title}
+  description={doc.data.description}
+  section={doc.data.section}
+  slug={doc.slug}
+  prevDoc={prevDoc}
+  nextDoc={nextDoc}
+>
+  <Content />
+</DocsLayout>

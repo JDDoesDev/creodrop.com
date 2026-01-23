@@ -1,0 +1,235 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import ButtondownForm from '../components/ButtondownForm.astro';
+import ClockIcon from '../components/icons/ClockIcon.astro';
+import DrupalIcon from '../components/icons/DrupalIcon.astro';
+import LayoutIcon from '../components/icons/LayoutIcon.astro';
+import LayersIcon from '../components/icons/LayersIcon.astro';
+import LockIcon from '../components/icons/LockIcon.astro';
+import StarIcon from '../components/icons/StarIcon.astro';
+import SettingsIcon from '../components/icons/SettingsIcon.astro';
+import CodeIcon from '../components/icons/CodeIcon.astro';
+import CheckCircleIcon from '../components/icons/CheckCircleIcon.astro';
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Creodrop',
+  url: 'https://creodrop.com',
+  logo: 'https://creodrop.com/images/logo.svg',
+  description:
+    'Managed Drupal hosting for everyone. Launch powerful, scalable websites without the complexity.',
+  sameAs: ['https://twitch.tv/jddoesdev'],
+};
+
+const softwareSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Creodrop',
+  applicationCategory: 'WebApplication',
+  operatingSystem: 'Web',
+  description:
+    'Managed Drupal hosting platform. Launch powerful, scalable websites in minutes without technical expertise.',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+    description: 'Free 14-day trial',
+  },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '5',
+    ratingCount: '1',
+    bestRating: '5',
+    worstRating: '1',
+  },
+};
+---
+
+<PageLayout
+  title="Creodrop - Serious sites, simple setup | Managed Drupal Hosting"
+  description="Managed Drupal hosting for everyone. Launch powerful, scalable websites in minutes without technical expertise. Free 14-day trial, no credit card required."
+  canonical="https://creodrop.com/"
+  keywords="Drupal hosting, managed Drupal, Drupal CMS hosting, easy Drupal hosting, Drupal for beginners, website builder"
+  ogTitle="Creodrop - Serious sites, simple setup"
+  ogDescription="Managed Drupal hosting for everyone. Launch powerful, scalable websites in minutes without technical expertise."
+  jsonLd={[organizationSchema, softwareSchema]}
+>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title">Serious sites,<br /> Simple setup</h1>
+        <p class="hero-subtitle">
+          Drupal hosting for everyone. Launch powerful, scalable websites
+          without the complexity. No servers to manage. No technical expertise
+          required.
+        </p>
+
+        <div class="signup-form">
+          <ButtondownForm showNote={true} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="container">
+      <h2 class="visually-hidden">Key Features</h2>
+      <div class="features-grid">
+        <div class="feature">
+          <div class="feature-icon">
+            <ClockIcon />
+          </div>
+          <h3 class="feature-title">Launch in minutes</h3>
+          <p class="feature-description">
+            Go from signup to live site in under 2 minutes. Pick your features,
+            we handle the rest.
+          </p>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">
+            <DrupalIcon />
+          </div>
+          <h3 class="feature-title">Enterprise-grade power</h3>
+          <p class="feature-description">
+            Built on Drupal CMS - the platform trusted by governments,
+            universities, and Fortune 500 companies.
+          </p>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">
+            <LayoutIcon />
+          </div>
+          <h3 class="feature-title">No code required</h3>
+          <p class="feature-description">
+            Add features from your browser. Blog, store, forms, SEO - just click
+            to install. No terminal needed.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Creodrop Section -->
+  <section class="why-creodrop">
+    <div class="container">
+      <h2 class="section-title">Why Creodrop?</h2>
+      <p class="section-subtitle">For sites that need more than a page builder.</p>
+
+      <div class="benefits-grid">
+        <div class="benefit">
+          <div class="benefit-icon">
+            <LayersIcon />
+          </div>
+          <h3 class="benefit-title">Built to scale</h3>
+          <p class="benefit-description">
+            Start with a blog, grow into a full content platform. No migrations,
+            no rebuilds - just add what you need.
+          </p>
+        </div>
+
+        <div class="benefit">
+          <div class="benefit-icon">
+            <LockIcon />
+          </div>
+          <h3 class="benefit-title">You own your data</h3>
+          <p class="benefit-description">
+            Your content stays yours. Export anytime, no lock-in, no surprises.
+            Open source at the core.
+          </p>
+        </div>
+
+        <div class="benefit">
+          <div class="benefit-icon">
+            <StarIcon />
+          </div>
+          <h3 class="benefit-title">Pro-level features</h3>
+          <p class="benefit-description">
+            Custom content types, editorial workflows, multilingual support -
+            tools usually reserved for enterprise.
+          </p>
+        </div>
+
+        <div class="benefit">
+          <div class="benefit-icon">
+            <SettingsIcon />
+          </div>
+          <h3 class="benefit-title">Endlessly extensible</h3>
+          <p class="benefit-description">
+            Thousands of modules available. Add e-commerce, memberships, forms,
+            SEO tools - whatever your project needs.
+          </p>
+        </div>
+
+        <div class="benefit">
+          <div class="benefit-icon">
+            <CodeIcon />
+          </div>
+          <h3 class="benefit-title">Developer-friendly, not mandatory</h3>
+          <p class="benefit-description">
+            Start with clicks, grow into code. Connect your Git repo when you're
+            ready - or never touch it. Your site, your pace.
+          </p>
+        </div>
+
+        <div class="benefit">
+          <div class="benefit-icon">
+            <CheckCircleIcon />
+          </div>
+          <h3 class="benefit-title">Reliable and secure</h3>
+          <p class="benefit-description">
+            99.9% uptime target. Automatic backups, SSL included, and security
+            updates handled - so you can sleep easy.
+          </p>
+        </div>
+      </div>
+
+      <p class="why-summary">
+        Creodrop is for ambitious projects - small publishers, growing
+        businesses, and anyone who needs a site that can grow with them.
+      </p>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="how-it-works">
+    <div class="container">
+      <h2 class="section-title">How it works</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3 class="step-title">Sign up</h3>
+          <p class="step-description">Create your account in seconds</p>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3 class="step-title">Choose features</h3>
+          <p class="step-description">Pick what your site needs</p>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3 class="step-title">Go live</h3>
+          <p class="step-description">Your site is ready to share</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="container">
+      <h2 class="cta-title">Ready to build something serious?</h2>
+      <p class="cta-subtitle">
+        Join the beta and be first in line when we launch.
+      </p>
+
+      <ButtondownForm class="cta-form" />
+    </div>
+  </section>
+</PageLayout>
