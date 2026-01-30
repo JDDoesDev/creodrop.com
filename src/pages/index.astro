@@ -58,16 +58,108 @@ const softwareSchema = {
   <!-- Hero Section -->
   <section class="hero">
     <div class="container">
-      <div class="hero-content">
-        <h1 class="hero-title">Serious sites,<br /> Simple setup</h1>
-        <p class="hero-subtitle">
-          Drupal hosting for everyone. Launch powerful, scalable websites
-          without the complexity. No servers to manage. No technical expertise
-          required.
-        </p>
+      <div class="hero-layout">
+        <div class="hero-content" data-animate>
+          <h1 class="hero-title">
+            <span class="line-1">Serious sites,</span>
+            <span class="line-2">Simple setup.</span>
+          </h1>
+          <p class="hero-subtitle">
+            Drupal hosting for everyone. Launch powerful, scalable websites
+            without the complexity. No servers to manage. No technical expertise
+            required.
+          </p>
 
-        <div class="signup-form">
-          <ButtondownForm showNote={true} />
+          <div class="signup-form">
+            <ButtondownForm showNote={true} />
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="network-diagram">
+            <!-- Connection lines -->
+            <svg class="network-lines" viewBox="0 0 420 420">
+              <line class="network-line active" x1="210" y1="210" x2="210" y2="50"/>
+              <line class="network-line" x1="210" y1="210" x2="370" y2="130"/>
+              <line class="network-line active" x1="210" y1="210" x2="370" y2="290"/>
+              <line class="network-line" x1="210" y1="210" x2="210" y2="370"/>
+              <line class="network-line active" x1="210" y1="210" x2="50" y2="290"/>
+              <line class="network-line" x1="210" y1="210" x2="50" y2="130"/>
+
+              <!-- Data pulses -->
+              <circle class="data-pulse" r="4">
+                <animateMotion dur="2s" repeatCount="indefinite" path="M210,210 L210,50"/>
+              </circle>
+              <circle class="data-pulse" r="4">
+                <animateMotion dur="2.5s" repeatCount="indefinite" path="M210,210 L370,290"/>
+              </circle>
+              <circle class="data-pulse" r="4">
+                <animateMotion dur="2.2s" repeatCount="indefinite" path="M210,210 L50,290"/>
+              </circle>
+            </svg>
+
+            <!-- Floating decorations -->
+            <div class="network-float network-float-1"></div>
+            <div class="network-float network-float-2"></div>
+            <div class="network-float network-float-3"></div>
+
+            <!-- Central node - Your Site -->
+            <div class="network-node node-center">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            </div>
+
+            <!-- Satellite nodes -->
+            <div class="network-node node-satellite node-infra">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="8" rx="2"/>
+                <rect x="2" y="14" width="20" height="8" rx="2"/>
+                <line x1="6" y1="6" x2="6.01" y2="6"/>
+                <line x1="6" y1="18" x2="6.01" y2="18"/>
+              </svg>
+              <span class="node-label">Infrastructure</span>
+            </div>
+
+            <div class="network-node node-satellite node-security">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+              <span class="node-label">Security</span>
+            </div>
+
+            <div class="network-node node-satellite node-scale">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+              </svg>
+              <span class="node-label">Scaling</span>
+            </div>
+
+            <div class="network-node node-satellite node-deploy">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
+              <span class="node-label">Deployment</span>
+            </div>
+
+            <div class="network-node node-satellite node-data">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+              </svg>
+              <span class="node-label">Backups</span>
+            </div>
+
+            <div class="network-node node-satellite node-speed">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+              </svg>
+              <span class="node-label">Performance</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -77,12 +169,16 @@ const softwareSchema = {
   <section class="features">
     <div class="container">
       <h2 class="visually-hidden">Key Features</h2>
-      <div class="features-grid">
+      <div class="features-grid" data-animate data-animate-stagger>
         <div class="feature">
-          <div class="feature-icon">
-            <ClockIcon />
+          <span class="feature-number">01</span>
+          <div class="feature-header">
+            <div class="feature-icon">
+              <ClockIcon />
+            </div>
+            <h3 class="feature-title">Launch in minutes</h3>
           </div>
-          <h3 class="feature-title">Launch in minutes</h3>
+          <div class="feature-divider"></div>
           <p class="feature-description">
             Go from signup to live site in under 2 minutes. Pick your features,
             we handle the rest.
@@ -90,10 +186,14 @@ const softwareSchema = {
         </div>
 
         <div class="feature">
-          <div class="feature-icon">
-            <DrupalIcon />
+          <span class="feature-number">02</span>
+          <div class="feature-header">
+            <div class="feature-icon">
+              <DrupalIcon />
+            </div>
+            <h3 class="feature-title">Enterprise-grade power</h3>
           </div>
-          <h3 class="feature-title">Enterprise-grade power</h3>
+          <div class="feature-divider"></div>
           <p class="feature-description">
             Built on Drupal CMS - the platform trusted by governments,
             universities, and Fortune 500 companies.
@@ -101,10 +201,14 @@ const softwareSchema = {
         </div>
 
         <div class="feature">
-          <div class="feature-icon">
-            <LayoutIcon />
+          <span class="feature-number">03</span>
+          <div class="feature-header">
+            <div class="feature-icon">
+              <LayoutIcon />
+            </div>
+            <h3 class="feature-title">No code required</h3>
           </div>
-          <h3 class="feature-title">No code required</h3>
+          <div class="feature-divider"></div>
           <p class="feature-description">
             Add features from your browser. Blog, store, forms, SEO - just click
             to install. No terminal needed.
@@ -114,21 +218,26 @@ const softwareSchema = {
     </div>
   </section>
 
+  <div class="section-divider"></div>
+
   <!-- Why Creodrop Section -->
   <section class="why-creodrop">
     <div class="container">
-      <h2 class="section-title">Why Creodrop?</h2>
-      <p class="section-subtitle">For sites that need more than a page builder.</p>
+      <div class="section-header" data-animate>
+        <h2 class="section-title">Why Creodrop?</h2>
+        <p class="section-subtitle">For sites that need more than a page builder.</p>
+      </div>
 
-      <div class="benefits-grid">
-        <div class="benefit">
+      <div class="benefits-grid" data-animate data-animate-stagger>
+        <!-- Featured card (spans 2 rows) -->
+        <div class="benefit benefit--featured">
           <div class="benefit-icon">
             <LayersIcon />
           </div>
           <h3 class="benefit-title">Built to scale</h3>
           <p class="benefit-description">
             Start with a blog, grow into a full content platform. No migrations,
-            no rebuilds - just add what you need.
+            no rebuilds - just add what you need. Your site evolves with your ambitions.
           </p>
         </div>
 
@@ -139,7 +248,6 @@ const softwareSchema = {
           <h3 class="benefit-title">You own your data</h3>
           <p class="benefit-description">
             Your content stays yours. Export anytime, no lock-in, no surprises.
-            Open source at the core.
           </p>
         </div>
 
@@ -149,8 +257,7 @@ const softwareSchema = {
           </div>
           <h3 class="benefit-title">Pro-level features</h3>
           <p class="benefit-description">
-            Custom content types, editorial workflows, multilingual support -
-            tools usually reserved for enterprise.
+            Custom content types, editorial workflows, multilingual support.
           </p>
         </div>
 
@@ -160,8 +267,7 @@ const softwareSchema = {
           </div>
           <h3 class="benefit-title">Endlessly extensible</h3>
           <p class="benefit-description">
-            Thousands of modules available. Add e-commerce, memberships, forms,
-            SEO tools - whatever your project needs.
+            Thousands of modules available. Add whatever your project needs.
           </p>
         </div>
 
@@ -169,22 +275,24 @@ const softwareSchema = {
           <div class="benefit-icon">
             <CodeIcon />
           </div>
-          <h3 class="benefit-title">Developer-friendly, not mandatory</h3>
+          <h3 class="benefit-title">Developer-friendly</h3>
           <p class="benefit-description">
-            Start with clicks, grow into code. Connect your Git repo when you're
-            ready - or never touch it. Your site, your pace.
+            Start with clicks, grow into code. Connect Git when ready.
           </p>
         </div>
 
-        <div class="benefit">
+        <!-- Anchor card (full width) -->
+        <div class="benefit benefit--anchor">
           <div class="benefit-icon">
             <CheckCircleIcon />
           </div>
-          <h3 class="benefit-title">Reliable and secure</h3>
-          <p class="benefit-description">
-            99.9% uptime target. Automatic backups, SSL included, and security
-            updates handled - so you can sleep easy.
-          </p>
+          <div class="benefit-text">
+            <h3 class="benefit-title">Reliable and secure</h3>
+            <p class="benefit-description">
+              99.9% uptime target. Automatic backups, SSL included, and security
+              updates handled - so you can sleep easy.
+            </p>
+          </div>
         </div>
       </div>
 
@@ -195,27 +303,58 @@ const softwareSchema = {
     </div>
   </section>
 
+  <div class="section-divider"></div>
+
   <!-- How It Works -->
   <section class="how-it-works">
     <div class="container">
-      <h2 class="section-title">How it works</h2>
-      <div class="steps">
-        <div class="step">
-          <div class="step-number">1</div>
-          <h3 class="step-title">Sign up</h3>
-          <p class="step-description">Create your account in seconds</p>
+      <div class="section-header" data-animate>
+        <h2 class="section-title">How it works</h2>
+      </div>
+
+      <div class="timeline" data-animate>
+        <div class="timeline-step">
+          <div class="timeline-visual">
+            <div class="visual-signup">
+              <div class="visual-input"></div>
+              <div class="visual-input"></div>
+              <div class="visual-input"></div>
+            </div>
+          </div>
+          <div class="timeline-number">1</div>
+          <div class="timeline-content">
+            <h3 class="timeline-title">Sign up</h3>
+            <p class="timeline-description">Create your account in seconds. No credit card required.</p>
+          </div>
         </div>
-        <div class="step-connector"></div>
-        <div class="step">
-          <div class="step-number">2</div>
-          <h3 class="step-title">Choose features</h3>
-          <p class="step-description">Pick what your site needs</p>
+
+        <div class="timeline-step">
+          <div class="timeline-visual">
+            <div class="visual-features">
+              <div class="visual-toggle"></div>
+              <div class="visual-toggle"></div>
+              <div class="visual-toggle"></div>
+              <div class="visual-toggle"></div>
+              <div class="visual-toggle"></div>
+              <div class="visual-toggle"></div>
+            </div>
+          </div>
+          <div class="timeline-number">2</div>
+          <div class="timeline-content">
+            <h3 class="timeline-title">Choose features</h3>
+            <p class="timeline-description">Pick what your site needs - blog, store, forms, and more.</p>
+          </div>
         </div>
-        <div class="step-connector"></div>
-        <div class="step">
-          <div class="step-number">3</div>
-          <h3 class="step-title">Go live</h3>
-          <p class="step-description">Your site is ready to share</p>
+
+        <div class="timeline-step">
+          <div class="timeline-visual">
+            <div class="visual-launch"></div>
+          </div>
+          <div class="timeline-number">3</div>
+          <div class="timeline-content">
+            <h3 class="timeline-title">Go live</h3>
+            <p class="timeline-description">Your site is ready to share with the world.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -224,12 +363,41 @@ const softwareSchema = {
   <!-- CTA Section -->
   <section class="cta">
     <div class="container">
-      <h2 class="cta-title">Ready to build something serious?</h2>
-      <p class="cta-subtitle">
-        Join the beta and be first in line when we launch.
-      </p>
+      <div class="cta-layout">
+        <div class="cta-content" data-animate>
+          <h2 class="cta-title">Ready to build something serious?</h2>
+          <p class="cta-subtitle">
+            Join the beta and be first in line when we launch.
+          </p>
+        </div>
 
-      <ButtondownForm class="cta-form" />
+        <div class="cta-form" data-animate>
+          <ButtondownForm />
+        </div>
+      </div>
     </div>
   </section>
 </PageLayout>
+
+<script>
+  // Intersection Observer for scroll animations
+  const animateElements = document.querySelectorAll('[data-animate]');
+
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+      }
+    });
+  }, observerOptions);
+
+  animateElements.forEach(el => {
+    observer.observe(el);
+  });
+</script>
