@@ -12,6 +12,7 @@
     "@astrojs/rss": "^4.0.0",
     "@astrojs/sitemap": "^3.2.0",
     "@pagefind/default-ui": "^1.4.0",
+    "@vercel/og": "^0.8.6",
     "astro": "^5.0.0",
     "mermaid": "^11.12.2"
   }
