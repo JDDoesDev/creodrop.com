@@ -1,0 +1,181 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import ButtondownForm from '../components/ButtondownForm.astro';
+---
+
+<PageLayout
+  title="Roadmap - Creodrop | What We're Building"
+  description="See what's coming next for Creodrop. Our public roadmap shows current progress, upcoming features, and our vision for managed Drupal hosting."
+  canonical="https://creodrop.com/roadmap/"
+  ogTitle="Roadmap - Creodrop"
+  ogDescription="See what's coming next for Creodrop. Our public roadmap shows what we're building and what's planned."
+>
+  <!-- Roadmap Hero -->
+  <section class="roadmap-hero">
+    <div class="container">
+      <h1 class="roadmap-title">Roadmap</h1>
+      <p class="roadmap-subtitle">
+        We're building Creodrop in public. Here's what we're working on and
+        what's coming next.
+      </p>
+    </div>
+  </section>
+
+  <!-- Roadmap Content -->
+  <section class="roadmap-content">
+    <div class="container">
+      <!-- Now -->
+      <div class="roadmap-section">
+        <div class="roadmap-header">
+          <span class="roadmap-badge roadmap-badge--now">Now</span>
+          <h2 class="roadmap-section-title">In Progress</h2>
+        </div>
+        <div class="roadmap-items">
+          <div class="roadmap-item">
+            <h3 class="roadmap-item-title">Billing & Subscriptions</h3>
+            <p class="roadmap-item-description">
+              Lemon Squeezy integration for simple, predictable pricing with
+              Starter, Standard, and Pro tiers.
+            </p>
+          </div>
+          <div class="roadmap-item">
+            <h3 class="roadmap-item-title">Production Hardening</h3>
+            <p class="roadmap-item-description">
+              Final testing, monitoring setup, and preparing for public beta
+              launch.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Next -->
+      <div class="roadmap-section">
+        <div class="roadmap-header">
+          <span class="roadmap-badge roadmap-badge--next">Next</span>
+          <h2 class="roadmap-section-title">Up Next</h2>
+        </div>
+        <div class="roadmap-items">
+          <div class="roadmap-item">
+            <h3 class="roadmap-item-title">Automated Backups</h3>
+            <p class="roadmap-item-description">
+              Daily backups with one-click restore. Never lose your work.
+            </p>
+          </div>
+          <div class="roadmap-item">
+            <h3 class="roadmap-item-title">Drupal CMS 2.0 Integration</h3>
+            <p class="roadmap-item-description">
+              Upgrade to Drupal CMS 2.0 with Canvas visual builder for no-code
+              page building.
+            </p>
+          </div>
+          <div class="roadmap-item">
+            <h3 class="roadmap-item-title">Site Templates</h3>
+            <p class="roadmap-item-description">
+              Pre-built starting points for blogs, portfolios, and business
+              sites using Drupal CMS recipes.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Later -->
+      <div class="roadmap-section">
+        <div class="roadmap-header">
+          <span class="roadmap-badge roadmap-badge--later">Later</span>
+          <h2 class="roadmap-section-title">On the Horizon</h2>
+        </div>
+        <div class="roadmap-items">
+          <div class="roadmap-item">
+            <h3 class="roadmap-item-title">Staging Environments</h3>
+            <p class="roadmap-item-description">
+              Test changes before going live with one-click staging sites.
+            </p>
+          </div>
+          <div class="roadmap-item">
+            <h3 class="roadmap-item-title">Git Integration</h3>
+            <p class="roadmap-item-description">
+              Connect your repository for version control and deploy-on-push
+              workflows. Optional for power users.
+            </p>
+          </div>
+          <div class="roadmap-item">
+            <h3 class="roadmap-item-title">Team Collaboration</h3>
+            <p class="roadmap-item-description">
+              Invite team members with role-based permissions.
+            </p>
+          </div>
+          <div class="roadmap-item">
+            <h3 class="roadmap-item-title">Performance Dashboard</h3>
+            <p class="roadmap-item-description">
+              SEO scores, accessibility checks, and performance metrics in one
+              place.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Completed -->
+      <div class="roadmap-section">
+        <div class="roadmap-header">
+          <span class="roadmap-badge roadmap-badge--done">Done</span>
+          <h2 class="roadmap-section-title">Completed</h2>
+        </div>
+        <div class="roadmap-items">
+          <div class="roadmap-item roadmap-item--done">
+            <h3 class="roadmap-item-title">Control Panel</h3>
+            <p class="roadmap-item-description">
+              Full dashboard to create, manage, and monitor your sites with
+              account settings and site configuration.
+            </p>
+          </div>
+          <div class="roadmap-item roadmap-item--done">
+            <h3 class="roadmap-item-title">Custom Domains</h3>
+            <p class="roadmap-item-description">
+              Connect your own domain with automatic SSL certificates via Let's
+              Encrypt. DNS verification included.
+            </p>
+          </div>
+          <div class="roadmap-item roadmap-item--done">
+            <h3 class="roadmap-item-title">User Authentication</h3>
+            <p class="roadmap-item-description">
+              Secure login and registration with email verification, password
+              management, and social login via Google and GitHub.
+            </p>
+          </div>
+          <div class="roadmap-item roadmap-item--done">
+            <h3 class="roadmap-item-title">Platform Infrastructure</h3>
+            <p class="roadmap-item-description">
+              Container orchestration with Traefik, automated database
+              provisioning, and site creation in under 2 minutes.
+            </p>
+          </div>
+          <div class="roadmap-item roadmap-item--done">
+            <h3 class="roadmap-item-title">Base Drupal Image</h3>
+            <p class="roadmap-item-description">
+              Production-ready container with PHP 8.3, Nginx, and optimized
+              Drupal configuration.
+            </p>
+          </div>
+          <div class="roadmap-item roadmap-item--done">
+            <h3 class="roadmap-item-title">Landing Page & Beta Signup</h3>
+            <p class="roadmap-item-description">
+              You're looking at it! Join the beta to get early access.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="container">
+      <h2 class="cta-title">Want to shape what we build?</h2>
+      <p class="cta-subtitle">
+        Join the beta and tell us what features matter most to you.
+      </p>
+
+      <ButtondownForm class="cta-form" />
+    </div>
+  </section>
+</PageLayout>

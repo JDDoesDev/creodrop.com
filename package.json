@@ -1,0 +1,18 @@
+{
+  "name": "creodrop-landing",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build && npx pagefind --site dist",
+    "preview": "astro preview",
+    "new-post": "node scripts/new-post.js"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.0",
+    "@astrojs/sitemap": "^3.2.0",
+    "@pagefind/default-ui": "^1.4.0",
+    "astro": "^5.0.0",
+    "mermaid": "^11.12.2"
+  }
+}

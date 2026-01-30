@@ -1,0 +1,106 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import DocsSearch from '../../components/DocsSearch.astro';
+import StarIcon from '../../components/icons/StarIcon.astro';
+import LayoutIcon from '../../components/icons/LayoutIcon.astro';
+import DrupalIcon from '../../components/icons/DrupalIcon.astro';
+import SettingsIcon from '../../components/icons/SettingsIcon.astro';
+
+// Get all non-draft docs
+const allDocs = await getCollection('docs', ({ data }) => !data.draft);
+
+// Define sections with metadata
+const sections = [
+  {
+    id: 'getting-started',
+    label: 'Getting Started',
+    description: 'Introduction to Creodrop and getting your first site up and running.',
+  },
+  {
+    id: 'dashboard',
+    label: 'Dashboard',
+    description: 'Navigate and use the Creodrop dashboard effectively.',
+  },
+  {
+    id: 'sites',
+    label: 'Sites',
+    description: 'Create, manage, and configure your Drupal sites.',
+  },
+  {
+    id: 'settings',
+    label: 'Settings',
+    description: 'Configure your account, billing, and API access.',
+  },
+] as const;
+
+// Get first doc for each section
+const sectionData = sections.map(section => {
+  const docs = allDocs
+    .filter(doc => doc.data.section === section.id)
+    .sort((a, b) => a.data.order - b.data.order);
+  return {
+    ...section,
+    firstDoc: docs[0],
+    docCount: docs.length,
+  };
+});
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    'name': 'Creodrop Documentation',
+    'description': 'Learn how to use Creodrop for managed Drupal hosting.',
+    'url': 'https://creodrop.com/docs',
+  },
+];
+---
+
+<BaseLayout
+  title="Documentation | Creodrop"
+  description="Learn how to use Creodrop for managed Drupal hosting. Find guides for the dashboard, site management, and more."
+  canonical="https://creodrop.com/docs"
+  jsonLd={jsonLd}
+>
+  <Header />
+  <main>
+    <section class="docs-hero">
+      <div class="container">
+        <h1 class="docs-hero-title">Documentation</h1>
+        <p class="docs-hero-subtitle">
+          Everything you need to know about using Creodrop for managed Drupal hosting.
+        </p>
+        <div class="docs-hero-search">
+          <DocsSearch />
+        </div>
+      </div>
+    </section>
+
+    <section class="docs-sections">
+      <div class="container">
+        <div class="docs-sections-grid">
+          {sectionData.map(section => (
+            <a
+              href={section.firstDoc ? `/docs/${section.firstDoc.slug}` : '#'}
+              class="docs-section-card"
+            >
+              <span class="docs-section-icon">
+                {section.id === 'getting-started' && <StarIcon size={40} />}
+                {section.id === 'dashboard' && <LayoutIcon size={40} />}
+                {section.id === 'sites' && <DrupalIcon size={40} />}
+                {section.id === 'settings' && <SettingsIcon size={40} />}
+              </span>
+              <h2 class="docs-section-title">{section.label}</h2>
+              <p class="docs-section-description">{section.description}</p>
+              <span class="docs-section-count">{section.docCount} articles</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

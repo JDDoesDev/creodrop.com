@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creodrop Landing Page - Design Mockup</title>
+
+    <!-- Fonts: Space Grotesk (display) + Outfit (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* =============================================================================
+           CSS Variables - Keeping existing cyan palette
+           ============================================================================= */
+        :root {
+            /* Colors - Existing palette preserved */
+            --color-primary: #0891b2;
+            --color-primary-dark: #0e7490;
+            --color-secondary: #2dd4bf;
+            --color-gradient: linear-gradient(135deg, #0891b2 0%, #2dd4bf 100%);
+
+            --color-text: #134e4a;
+            --color-text-light: #5f7470;
+            --color-text-muted: #94a3b8;
+
+            --color-bg: #ffffff;
+            --color-bg-alt: #f0fdfa;
+            --color-bg-dark: #0f172a;
+
+            --color-border: #e2e8f0;
+            --color-border-strong: #cbd5e1;
+
+            /* NEW: Typography */
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Outfit', sans-serif;
+
+            /* Spacing */
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+            --spacing-2xl: 5rem;
+
+            /* Border Radius */
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 1rem;
+
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+
+        /* Dark Mode */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-text: #f1f5f9;
+                --color-text-light: #cbd5e1;
+                --color-text-muted: #94a3b8;
+                --color-bg: #0f172a;
+                --color-bg-alt: #1e293b;
+                --color-border: #334155;
+                --color-border-strong: #475569;
+            }
+        }
+
+        /* =============================================================================
+           Reset & Base
+           ============================================================================= */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        * {
+            margin: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--color-text);
+            background-color: var(--color-bg);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* =============================================================================
+           Animation System
+           ============================================================================= */
+        [data-animate] {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+
+        [data-animate].is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Stagger delays */
+        [data-animate-stagger] > *:nth-child(1) { transition-delay: 0ms; }
+        [data-animate-stagger] > *:nth-child(2) { transition-delay: 120ms; }
+        [data-animate-stagger] > *:nth-child(3) { transition-delay: 240ms; }
+        [data-animate-stagger] > *:nth-child(4) { transition-delay: 360ms; }
+        [data-animate-stagger] > *:nth-child(5) { transition-delay: 480ms; }
+        [data-animate-stagger] > *:nth-child(6) { transition-delay: 600ms; }
+
+        /* =============================================================================
+           Container
+           ============================================================================= */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        /* =============================================================================
+           Header
+           ============================================================================= */
+        .header {
+            padding: var(--spacing-md) 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .header {
+                background: rgba(15, 23, 42, 0.9);
+            }
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+
+        .nav-list {
+            display: flex;
+            gap: var(--spacing-xs);
+            list-style: none;
+            padding: 0;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 0.5rem 1rem;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            color: var(--color-text-light);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            transition: color 0.15s, background-color 0.15s;
+        }
+
+        .nav-link:hover {
+            color: var(--color-text);
+            background-color: var(--color-bg-alt);
+        }
+
+        /* =============================================================================
+           Hero Section - Asymmetric Layout
+           ============================================================================= */
+        .hero {
+            padding: calc(var(--spacing-2xl) + 80px) 0 var(--spacing-2xl);
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            /* Dot grid background */
+            background-color: var(--color-bg-alt);
+            background-image: radial-gradient(circle at 1px 1px, var(--color-border) 1px, transparent 0);
+            background-size: 32px 32px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 0%, var(--color-bg-alt) 100%);
+            pointer-events: none;
+        }
+
+        .hero-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xl);
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            text-align: left;
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.75rem, 6vw, 4.5rem);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            color: var(--color-text);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .hero-title span {
+            display: block;
+        }
+
+        .hero-title .line-2 {
+            color: var(--color-primary);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.125rem, 2vw, 1.375rem);
+            color: var(--color-text-light);
+            margin-bottom: var(--spacing-xl);
+            max-width: 500px;
+            line-height: 1.7;
+        }
+
+        /* Network Diagram - Abstract hosting infrastructure */
+        .hero-visual {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+        }
+
+        .network-diagram {
+            position: relative;
+            width: 100%;
+            max-width: 420px;
+            aspect-ratio: 1;
+        }
+
+        /* Connection lines (SVG) */
+        .network-lines {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .network-line {
+            stroke: var(--color-border-strong);
+            stroke-width: 2;
+            fill: none;
+            stroke-dasharray: 8 4;
+            animation: dash 20s linear infinite;
+        }
+
+        .network-line.active {
+            stroke: var(--color-primary);
+            stroke-width: 2.5;
+            stroke-dasharray: none;
+            animation: none;
+        }
+
+        @keyframes dash {
+            to { stroke-dashoffset: -100; }
+        }
+
+        /* Data pulse animation along lines */
+        .data-pulse {
+            fill: var(--color-secondary);
+            animation: pulse-travel 3s ease-in-out infinite;
+        }
+
+        .data-pulse:nth-child(2) { animation-delay: 1s; }
+        .data-pulse:nth-child(3) { animation-delay: 2s; }
+
+        @keyframes pulse-travel {
+            0%, 100% { opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+        }
+
+        /* Nodes */
+        .network-node {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--color-bg);
+            border: 2px solid var(--color-border);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .network-node:hover {
+            transform: scale(1.1);
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 4px rgba(8, 145, 178, 0.15);
+        }
+
+        .network-node svg {
+            color: var(--color-text-light);
+            transition: color 0.3s ease;
+        }
+
+        .network-node:hover svg {
+            color: var(--color-primary);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .network-node {
+                background: var(--color-bg-alt);
+            }
+        }
+
+        /* Central node - Your Site */
+        .node-center {
+            width: 100px;
+            height: 100px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            box-shadow:
+                0 0 0 8px rgba(8, 145, 178, 0.15),
+                0 0 0 16px rgba(8, 145, 178, 0.08);
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        .node-center:hover {
+            transform: translate(-50%, -50%) scale(1.05);
+        }
+
+        .node-center svg {
+            color: white;
+            width: 40px;
+            height: 40px;
+        }
+
+        .node-center:hover svg {
+            color: white;
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow:
+                    0 0 0 8px rgba(8, 145, 178, 0.15),
+                    0 0 0 16px rgba(8, 145, 178, 0.08);
+            }
+            50% {
+                box-shadow:
+                    0 0 0 12px rgba(8, 145, 178, 0.2),
+                    0 0 0 24px rgba(8, 145, 178, 0.1);
+            }
+        }
+
+        /* Satellite nodes */
+        .node-satellite {
+            width: 56px;
+            height: 56px;
+        }
+
+        .node-satellite svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Position satellite nodes in a circle */
+        .node-infra {
+            top: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .node-infra:hover {
+            transform: translateX(-50%) scale(1.1);
+        }
+
+        .node-security {
+            top: 25%;
+            right: 5%;
+        }
+
+        .node-scale {
+            bottom: 25%;
+            right: 5%;
+        }
+
+        .node-deploy {
+            bottom: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .node-deploy:hover {
+            transform: translateX(-50%) scale(1.1);
+        }
+
+        .node-data {
+            bottom: 25%;
+            left: 5%;
+        }
+
+        .node-speed {
+            top: 25%;
+            left: 5%;
+        }
+
+        /* Node labels */
+        .node-label {
+            position: absolute;
+            font-size: 0.6875rem;
+            font-weight: 500;
+            color: var(--color-text-muted);
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .node-infra .node-label { top: 100%; margin-top: 6px; left: 50%; transform: translateX(-50%); }
+        .node-security .node-label { left: -8px; top: 50%; transform: translate(-100%, -50%); }
+        .node-scale .node-label { left: -8px; top: 50%; transform: translate(-100%, -50%); }
+        .node-deploy .node-label { bottom: 100%; margin-bottom: 6px; left: 50%; transform: translateX(-50%); }
+        .node-data .node-label { right: -8px; top: 50%; transform: translate(100%, -50%); }
+        .node-speed .node-label { right: -8px; top: 50%; transform: translate(100%, -50%); }
+
+        /* Floating decoration */
+        .network-float {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .network-float-1 {
+            width: 12px;
+            height: 12px;
+            background: var(--color-secondary);
+            top: 15%;
+            left: 25%;
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .network-float-2 {
+            width: 8px;
+            height: 8px;
+            background: var(--color-primary);
+            bottom: 20%;
+            right: 20%;
+            animation: float 7s ease-in-out infinite 1s;
+        }
+
+        .network-float-3 {
+            width: 6px;
+            height: 6px;
+            border: 2px solid var(--color-secondary);
+            top: 40%;
+            right: 25%;
+            animation: float 6s ease-in-out infinite 0.5s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* =============================================================================
+           Form Styles
+           ============================================================================= */
+        .signup-form {
+            max-width: 420px;
+        }
+
+        .form-group {
+            display: flex;
+            gap: var(--spacing-xs);
+        }
+
+        .input {
+            flex: 1;
+            padding: 1rem 1.25rem;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            border: 2px solid var(--color-border);
+            border-radius: var(--radius-md);
+            background: var(--color-bg);
+            color: var(--color-text);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 4px rgba(8, 145, 178, 0.15);
+        }
+
+        .input::placeholder {
+            color: var(--color-text-muted);
+        }
+
+        .button {
+            padding: 1rem 1.75rem;
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            color: white;
+            background: var(--color-primary);
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.15s;
+            white-space: nowrap;
+        }
+
+        .button:hover {
+            background: var(--color-primary-dark);
+            transform: scale(1.02);
+        }
+
+        .button:active {
+            transform: scale(0.98);
+        }
+
+        .form-note {
+            font-size: 0.875rem;
+            color: var(--color-text-muted);
+            margin-top: var(--spacing-sm);
+        }
+
+        /* =============================================================================
+           Section Divider
+           ============================================================================= */
+        .section-divider {
+            height: 1px;
+            max-width: 200px;
+            margin: 0 auto;
+            background: linear-gradient(90deg, transparent 0%, var(--color-border) 30%, var(--color-border) 70%, transparent 100%);
+            position: relative;
+        }
+
+        .section-divider::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            background: var(--color-secondary);
+            border-radius: 50%;
+        }
+
+        /* =============================================================================
+           Features Section - Numbered Cards with Stagger
+           ============================================================================= */
+        .features {
+            padding: var(--spacing-2xl) 0;
+            background: var(--color-bg);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-lg);
+        }
+
+        .feature {
+            position: relative;
+            padding: var(--spacing-lg);
+            padding-left: calc(var(--spacing-lg) + 4px);
+            border-left: 4px solid var(--color-primary);
+            background: var(--color-bg);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Staggered vertical offset */
+        .feature:nth-child(2) {
+            margin-top: 30px;
+        }
+
+        .feature:nth-child(3) {
+            margin-top: 60px;
+        }
+
+        .feature:hover {
+            transform: translateX(4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .feature-number {
+            position: absolute;
+            top: var(--spacing-sm);
+            right: var(--spacing-md);
+            font-family: var(--font-display);
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--color-border);
+            line-height: 1;
+            opacity: 0.5;
+        }
+
+        .feature-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--color-bg-alt);
+            border-radius: var(--radius-md);
+            color: var(--color-primary);
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        /* Accent dot on icons */
+        .feature-icon::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            width: 12px;
+            height: 12px;
+            background: var(--color-secondary);
+            border-radius: 50%;
+            border: 2px solid var(--color-bg);
+        }
+
+        .feature-title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .feature-divider {
+            height: 1px;
+            background: var(--color-border);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .feature-description {
+            color: var(--color-text-light);
+            font-size: 0.9375rem;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* =============================================================================
+           Why Creodrop - Bento Grid
+           ============================================================================= */
+        .why-creodrop {
+            padding: var(--spacing-2xl) 0;
+            background: var(--color-bg-alt);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 2.75rem);
+            font-weight: 700;
+            color: var(--color-text);
+            margin-bottom: var(--spacing-xs);
+            letter-spacing: -0.02em;
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--color-text-light);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, auto);
+            gap: var(--spacing-md);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .benefit {
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+        }
+
+        .benefit:hover {
+            border-color: var(--color-primary);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        /* Featured card - spans 2 rows, dark background */
+        .benefit--featured {
+            grid-row: span 2;
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .benefit--featured .benefit-icon {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .benefit--featured .benefit-title {
+            color: white;
+        }
+
+        .benefit--featured .benefit-description {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        /* Anchor card - full width */
+        .benefit--anchor {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-bg-alt) 100%);
+            border: 2px solid var(--color-border);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-lg);
+            padding: var(--spacing-lg) var(--spacing-xl);
+        }
+
+        .benefit--anchor .benefit-icon {
+            width: 64px;
+            height: 64px;
+        }
+
+        .benefit--anchor .benefit-text {
+            flex: 1;
+        }
+
+        .benefit-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--color-bg-alt);
+            border-radius: var(--radius-md);
+            color: var(--color-primary);
+        }
+
+        .benefit-title {
+            font-family: var(--font-display);
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+            color: var(--color-text);
+        }
+
+        .benefit-description {
+            font-size: 0.9375rem;
+            color: var(--color-text-light);
+            line-height: 1.6;
+        }
+
+        /* =============================================================================
+           How It Works - Vertical Timeline
+           ============================================================================= */
+        .how-it-works {
+            padding: var(--spacing-2xl) 0;
+            background: var(--color-bg);
+        }
+
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xl);
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Vertical line */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 280px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--color-border) 0%, var(--color-primary) 50%, var(--color-border) 100%);
+        }
+
+        .timeline-step {
+            display: grid;
+            grid-template-columns: 250px 60px 1fr;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .timeline-visual {
+            background: var(--color-bg-alt);
+            border: 2px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 120px;
+        }
+
+        /* Abstract visual representations */
+        .visual-signup {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .visual-signup .visual-input {
+            height: 12px;
+            background: var(--color-border);
+            border-radius: 4px;
+        }
+
+        .visual-signup .visual-input:first-child {
+            width: 80%;
+        }
+
+        .visual-signup .visual-input:last-child {
+            width: 40%;
+            background: var(--color-primary);
+        }
+
+        .visual-features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            width: 100%;
+        }
+
+        .visual-features .visual-toggle {
+            height: 20px;
+            background: var(--color-border);
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .visual-features .visual-toggle::after {
+            content: '';
+            position: absolute;
+            right: 2px;
+            top: 2px;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .visual-features .visual-toggle:nth-child(odd)::after {
+            left: 2px;
+            right: auto;
+            background: var(--color-secondary);
+        }
+
+        .visual-launch {
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--color-primary);
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .visual-launch::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            border-left: 16px solid var(--color-primary);
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            margin-left: 4px;
+        }
+
+        .timeline-number {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+            background: var(--color-primary);
+            border-radius: 50%;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 0 0 6px var(--color-bg);
+        }
+
+        .timeline-content {
+            padding-left: var(--spacing-md);
+        }
+
+        .timeline-title {
+            font-family: var(--font-display);
+            font-size: 1.375rem;
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .timeline-description {
+            font-size: 1rem;
+            color: var(--color-text-light);
+        }
+
+        /* =============================================================================
+           CTA Section - Dark, Asymmetric
+           ============================================================================= */
+        .cta {
+            background: var(--color-bg-dark);
+            padding: var(--spacing-2xl) 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated gradient line at top */
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary), var(--color-primary));
+            background-size: 200% 100%;
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .cta-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xl);
+            align-items: center;
+        }
+
+        .cta-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 700;
+            color: white;
+            margin-bottom: var(--spacing-sm);
+            letter-spacing: -0.02em;
+        }
+
+        .cta-subtitle {
+            font-size: 1.125rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .cta-form {
+            max-width: 100%;
+        }
+
+        .cta-form .input {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .cta-form .input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .cta-form .input:focus {
+            border-color: var(--color-secondary);
+            box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.2);
+        }
+
+        .cta-form .button {
+            background: var(--color-secondary);
+            color: var(--color-bg-dark);
+        }
+
+        .cta-form .button:hover {
+            background: #5eead4;
+        }
+
+        /* =============================================================================
+           Footer
+           ============================================================================= */
+        .footer {
+            padding: var(--spacing-lg) 0;
+            background: var(--color-bg);
+            border-top: 1px solid var(--color-border);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-size: 0.875rem;
+            color: var(--color-text-muted);
+        }
+
+        /* =============================================================================
+           Responsive
+           ============================================================================= */
+        @media (max-width: 900px) {
+            .hero-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-visual {
+                display: none;
+            }
+
+            .hero-content {
+                text-align: center;
+            }
+
+            .hero-subtitle {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .signup-form {
+                margin: 0 auto;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature:nth-child(2),
+            .feature:nth-child(3) {
+                margin-top: 0;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .benefit--featured {
+                grid-row: auto;
+            }
+
+            .timeline::before {
+                left: 24px;
+            }
+
+            .timeline-step {
+                grid-template-columns: 48px 1fr;
+            }
+
+            .timeline-visual {
+                display: none;
+            }
+
+            .timeline-number {
+                box-shadow: 0 0 0 4px var(--color-bg);
+            }
+
+            .cta-layout {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .cta-form {
+                max-width: 420px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .form-group {
+                flex-direction: column;
+            }
+
+            .button {
+                width: 100%;
+            }
+
+            .benefit--anchor {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-inner">
+            <a href="#" class="logo">Creodrop</a>
+            <nav>
+                <ul class="nav-list">
+                    <li><a href="#" class="nav-link">Home</a></li>
+                    <li><a href="#" class="nav-link">Docs</a></li>
+                    <li><a href="#" class="nav-link">Blog</a></li>
+                    <li><a href="#" class="nav-link">Roadmap</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-layout">
+                <div class="hero-content" data-animate>
+                    <h1 class="hero-title">
+                        <span class="line-1">Serious sites,</span>
+                        <span class="line-2">Simple setup.</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Drupal hosting for everyone. Launch powerful, scalable websites
+                        without the complexity. No servers to manage. No technical expertise
+                        required.
+                    </p>
+
+                    <div class="signup-form">
+                        <div class="form-group">
+                            <input type="email" class="input" placeholder="Enter your email">
+                            <button class="button">Join the Beta</button>
+                        </div>
+                        <p class="form-note">Free 14-day trial. No credit card required.</p>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="network-diagram">
+                        <!-- Connection lines -->
+                        <svg class="network-lines" viewBox="0 0 420 420">
+                            <!-- Lines from center to satellites -->
+                            <line class="network-line active" x1="210" y1="210" x2="210" y2="50"/>
+                            <line class="network-line" x1="210" y1="210" x2="370" y2="130"/>
+                            <line class="network-line active" x1="210" y1="210" x2="370" y2="290"/>
+                            <line class="network-line" x1="210" y1="210" x2="210" y2="370"/>
+                            <line class="network-line active" x1="210" y1="210" x2="50" y2="290"/>
+                            <line class="network-line" x1="210" y1="210" x2="50" y2="130"/>
+
+                            <!-- Animated data pulses -->
+                            <circle class="data-pulse" r="4">
+                                <animateMotion dur="2s" repeatCount="indefinite" path="M210,210 L210,50"/>
+                            </circle>
+                            <circle class="data-pulse" r="4">
+                                <animateMotion dur="2.5s" repeatCount="indefinite" path="M210,210 L370,290"/>
+                            </circle>
+                            <circle class="data-pulse" r="4">
+                                <animateMotion dur="2.2s" repeatCount="indefinite" path="M210,210 L50,290"/>
+                            </circle>
+                        </svg>
+
+                        <!-- Floating decorations -->
+                        <div class="network-float network-float-1"></div>
+                        <div class="network-float network-float-2"></div>
+                        <div class="network-float network-float-3"></div>
+
+                        <!-- Central node - Your Site -->
+                        <div class="network-node node-center">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="2" y1="12" x2="22" y2="12"/>
+                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                            </svg>
+                        </div>
+
+                        <!-- Satellite nodes -->
+                        <div class="network-node node-satellite node-infra">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="8" rx="2"/>
+                                <rect x="2" y="14" width="20" height="8" rx="2"/>
+                                <line x1="6" y1="6" x2="6.01" y2="6"/>
+                                <line x1="6" y1="18" x2="6.01" y2="18"/>
+                            </svg>
+                            <span class="node-label">Infrastructure</span>
+                        </div>
+
+                        <div class="network-node node-satellite node-security">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
+                            <span class="node-label">Security</span>
+                        </div>
+
+                        <div class="network-node node-satellite node-scale">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                            </svg>
+                            <span class="node-label">Scaling</span>
+                        </div>
+
+                        <div class="network-node node-satellite node-deploy">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                            </svg>
+                            <span class="node-label">Deployment</span>
+                        </div>
+
+                        <div class="network-node node-satellite node-data">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                            </svg>
+                            <span class="node-label">Backups</span>
+                        </div>
+
+                        <div class="network-node node-satellite node-speed">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                            </svg>
+                            <span class="node-label">Performance</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="features-grid" data-animate data-animate-stagger>
+                <div class="feature">
+                    <span class="feature-number">01</span>
+                    <div class="feature-header">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12,6 12,12 16,14"></polyline>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Launch in minutes</h3>
+                    </div>
+                    <div class="feature-divider"></div>
+                    <p class="feature-description">
+                        Go from signup to live site in under 2 minutes. Pick your features,
+                        we handle the rest.
+                    </p>
+                </div>
+
+                <div class="feature">
+                    <span class="feature-number">02</span>
+                    <div class="feature-header">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="12,2 22,8.5 22,15.5 12,22 2,15.5 2,8.5 12,2"></polygon>
+                                <line x1="12" y1="22" x2="12" y2="15.5"></line>
+                                <polyline points="22,8.5 12,15.5 2,8.5"></polyline>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Enterprise-grade power</h3>
+                    </div>
+                    <div class="feature-divider"></div>
+                    <p class="feature-description">
+                        Built on Drupal CMS - the platform trusted by governments,
+                        universities, and Fortune 500 companies.
+                    </p>
+                </div>
+
+                <div class="feature">
+                    <span class="feature-number">03</span>
+                    <div class="feature-header">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="3" y1="9" x2="21" y2="9"></line>
+                                <line x1="9" y1="21" x2="9" y2="9"></line>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">No code required</h3>
+                    </div>
+                    <div class="feature-divider"></div>
+                    <p class="feature-description">
+                        Add features from your browser. Blog, store, forms, SEO - just click
+                        to install. No terminal needed.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Why Creodrop -->
+    <section class="why-creodrop">
+        <div class="container">
+            <div class="section-header" data-animate>
+                <h2 class="section-title">Why Creodrop?</h2>
+                <p class="section-subtitle">For sites that need more than a page builder.</p>
+            </div>
+
+            <div class="benefits-grid" data-animate data-animate-stagger>
+                <!-- Featured card (spans 2 rows) -->
+                <div class="benefit benefit--featured">
+                    <div class="benefit-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12,2 2,7 12,12 22,7 12,2"></polygon>
+                            <polyline points="2,17 12,22 22,17"></polyline>
+                            <polyline points="2,12 12,17 22,12"></polyline>
+                        </svg>
+                    </div>
+                    <h3 class="benefit-title">Built to scale</h3>
+                    <p class="benefit-description">
+                        Start with a blog, grow into a full content platform. No migrations,
+                        no rebuilds - just add what you need. Your site evolves with your ambitions.
+                    </p>
+                </div>
+
+                <div class="benefit">
+                    <div class="benefit-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7,11V7a5,5 0 0 1 10,0v4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="benefit-title">You own your data</h3>
+                    <p class="benefit-description">
+                        Your content stays yours. Export anytime, no lock-in, no surprises.
+                    </p>
+                </div>
+
+                <div class="benefit">
+                    <div class="benefit-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"></polygon>
+                        </svg>
+                    </div>
+                    <h3 class="benefit-title">Pro-level features</h3>
+                    <p class="benefit-description">
+                        Custom content types, editorial workflows, multilingual support.
+                    </p>
+                </div>
+
+                <div class="benefit">
+                    <div class="benefit-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4,15a1.65,1.65 0 0 0 .33,1.82l.06,.06a2,2 0 0 1 0,2.83 2,2 0 0 1 -2.83,0l-.06,-.06a1.65,1.65 0 0 0 -1.82,-.33 1.65,1.65 0 0 0 -1,1.51V21a2,2 0 0 1 -2,2 2,2 0 0 1 -2,-2v-.09A1.65,1.65 0 0 0 9,19.4a1.65,1.65 0 0 0 -1.82,.33l-.06,.06a2,2 0 0 1 -2.83,0 2,2 0 0 1 0,-2.83l.06,-.06a1.65,1.65 0 0 0 .33,-1.82 1.65,1.65 0 0 0 -1.51,-1H3a2,2 0 0 1 -2,-2 2,2 0 0 1 2,-2h.09A1.65,1.65 0 0 0 4.6,9a1.65,1.65 0 0 0 -.33,-1.82l-.06,-.06a2,2 0 0 1 0,-2.83 2,2 0 0 1 2.83,0l.06,.06a1.65,1.65 0 0 0 1.82,.33H9a1.65,1.65 0 0 0 1,-1.51V3a2,2 0 0 1 2,-2 2,2 0 0 1 2,2v.09a1.65,1.65 0 0 0 1,1.51 1.65,1.65 0 0 0 1.82,-.33l.06,-.06a2,2 0 0 1 2.83,0 2,2 0 0 1 0,2.83l-.06,.06a1.65,1.65 0 0 0 -.33,1.82V9a1.65,1.65 0 0 0 1.51,1H21a2,2 0 0 1 2,2 2,2 0 0 1 -2,2h-.09a1.65,1.65 0 0 0 -1.51,1z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="benefit-title">Endlessly extensible</h3>
+                    <p class="benefit-description">
+                        Thousands of modules available. Add whatever your project needs.
+                    </p>
+                </div>
+
+                <div class="benefit">
+                    <div class="benefit-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="16,18 22,12 16,6"></polyline>
+                            <polyline points="8,6 2,12 8,18"></polyline>
+                        </svg>
+                    </div>
+                    <h3 class="benefit-title">Developer-friendly</h3>
+                    <p class="benefit-description">
+                        Start with clicks, grow into code. Connect Git when ready.
+                    </p>
+                </div>
+
+                <!-- Anchor card (full width) -->
+                <div class="benefit benefit--anchor">
+                    <div class="benefit-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22,11.08V12a10,10 0 1 1 -5.93,-9.14"></path>
+                            <polyline points="22,4 12,14.01 9,11.01"></polyline>
+                        </svg>
+                    </div>
+                    <div class="benefit-text">
+                        <h3 class="benefit-title">Reliable and secure</h3>
+                        <p class="benefit-description">
+                            99.9% uptime target. Automatic backups, SSL included, and security
+                            updates handled - so you can sleep easy.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-header" data-animate>
+                <h2 class="section-title">How it works</h2>
+            </div>
+
+            <div class="timeline" data-animate>
+                <div class="timeline-step">
+                    <div class="timeline-visual">
+                        <div class="visual-signup">
+                            <div class="visual-input"></div>
+                            <div class="visual-input"></div>
+                            <div class="visual-input"></div>
+                        </div>
+                    </div>
+                    <div class="timeline-number">1</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Sign up</h3>
+                        <p class="timeline-description">Create your account in seconds. No credit card required.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-step">
+                    <div class="timeline-visual">
+                        <div class="visual-features">
+                            <div class="visual-toggle"></div>
+                            <div class="visual-toggle"></div>
+                            <div class="visual-toggle"></div>
+                            <div class="visual-toggle"></div>
+                            <div class="visual-toggle"></div>
+                            <div class="visual-toggle"></div>
+                        </div>
+                    </div>
+                    <div class="timeline-number">2</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Choose features</h3>
+                        <p class="timeline-description">Pick what your site needs - blog, store, forms, and more.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-step">
+                    <div class="timeline-visual">
+                        <div class="visual-launch"></div>
+                    </div>
+                    <div class="timeline-number">3</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Go live</h3>
+                        <p class="timeline-description">Your site is ready to share with the world.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-layout">
+                <div class="cta-content" data-animate>
+                    <h2 class="cta-title">Ready to build something serious?</h2>
+                    <p class="cta-subtitle">
+                        Join the beta and be first in line when we launch.
+                    </p>
+                </div>
+
+                <div class="cta-form" data-animate>
+                    <div class="form-group">
+                        <input type="email" class="input" placeholder="Enter your email">
+                        <button class="button">Join the Beta</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p class="footer-text">© 2026 Creodrop. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Animation Script -->
+    <script>
+        // Intersection Observer for scroll animations
+        const animateElements = document.querySelectorAll('[data-animate]');
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+
+                    // If this is a stagger container, animate children
+                    if (entry.target.hasAttribute('data-animate-stagger')) {
+                        const children = entry.target.children;
+                        Array.from(children).forEach(child => {
+                            child.classList.add('is-visible');
+                        });
+                    }
+                }
+            });
+        }, observerOptions);
+
+        animateElements.forEach(el => {
+            observer.observe(el);
+
+            // Set initial state for stagger children
+            if (el.hasAttribute('data-animate-stagger')) {
+                Array.from(el.children).forEach(child => {
+                    child.style.opacity = '0';
+                    child.style.transform = 'translateY(30px)';
+                    child.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                });
+            }
+        });
+
+        // Add visible class styles for stagger children
+        const style = document.createElement('style');
+        style.textContent = `
+            [data-animate-stagger] > *.is-visible {
+                opacity: 1 !important;
+                transform: translateY(0) !important;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
