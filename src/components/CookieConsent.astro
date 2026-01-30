@@ -1,0 +1,188 @@
+---
+// CookieConsent.astro - GDPR-compliant cookie consent banner
+---
+
+<div
+  class="cookie-consent"
+  id="cookie-consent"
+  role="dialog"
+  aria-labelledby="cookie-consent-title"
+  aria-describedby="cookie-consent-description"
+  aria-hidden="true"
+>
+  <div class="cookie-consent-content">
+    <div class="cookie-consent-text">
+      <h2 id="cookie-consent-title" class="visually-hidden">Cookie Consent</h2>
+      <p id="cookie-consent-description">
+        We use cookies to enhance your browsing experience and analyze site traffic.
+        By clicking "Accept", you consent to our use of cookies.
+      </p>
+    </div>
+    <div class="cookie-consent-actions">
+      <button type="button" class="cookie-btn cookie-btn-decline" id="cookie-decline">
+        Decline
+      </button>
+      <button type="button" class="cookie-btn cookie-btn-accept" id="cookie-accept">
+        Accept
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .cookie-consent {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: var(--spacing-md);
+    background: var(--color-bg);
+    border-top: 1px solid var(--color-border);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(100%);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .cookie-consent[aria-hidden="false"] {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .cookie-consent-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+  }
+
+  .cookie-consent-text {
+    flex: 1;
+    min-width: 280px;
+  }
+
+  .cookie-consent-text p {
+    font-size: 0.9375rem;
+    color: var(--color-text-light);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .cookie-consent-actions {
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-shrink: 0;
+  }
+
+  .cookie-btn {
+    padding: 0.75rem 1.25rem;
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.15s ease, border-color 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .cookie-btn:active {
+    transform: scale(0.98);
+  }
+
+  .cookie-btn-decline {
+    color: var(--color-text-light);
+    background: transparent;
+    border: 2px solid var(--color-border);
+  }
+
+  .cookie-btn-decline:hover {
+    border-color: var(--color-text-muted);
+    color: var(--color-text);
+  }
+
+  .cookie-btn-accept {
+    color: white;
+    background: var(--color-primary);
+    border: 2px solid var(--color-primary);
+  }
+
+  .cookie-btn-accept:hover {
+    background: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+  }
+
+  @media (max-width: 640px) {
+    .cookie-consent-content {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .cookie-consent-actions {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .cookie-btn {
+      flex: 1;
+      max-width: 150px;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .cookie-consent {
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+    }
+  }
+</style>
+
+<script>
+  const COOKIE_KEY = 'creodrop-cookie-consent';
+
+  function initCookieConsent() {
+    const banner = document.getElementById('cookie-consent');
+    const acceptBtn = document.getElementById('cookie-accept');
+    const declineBtn = document.getElementById('cookie-decline');
+
+    if (!banner || !acceptBtn || !declineBtn) return;
+
+    // Check if consent has already been given
+    const consent = localStorage.getItem(COOKIE_KEY);
+    if (consent) {
+      return; // User has already made a choice
+    }
+
+    // Show the banner
+    requestAnimationFrame(() => {
+      banner.setAttribute('aria-hidden', 'false');
+    });
+
+    // Handle accept
+    acceptBtn.addEventListener('click', () => {
+      localStorage.setItem(COOKIE_KEY, 'accepted');
+      hideBanner(banner);
+    });
+
+    // Handle decline
+    declineBtn.addEventListener('click', () => {
+      localStorage.setItem(COOKIE_KEY, 'declined');
+      hideBanner(banner);
+    });
+  }
+
+  function hideBanner(banner: HTMLElement) {
+    banner.setAttribute('aria-hidden', 'true');
+    // Remove from DOM after animation
+    setTimeout(() => {
+      banner.remove();
+    }, 300);
+  }
+
+  // Initialize on page load
+  document.addEventListener('DOMContentLoaded', initCookieConsent);
+  // Also handle Astro's view transitions
+  document.addEventListener('astro:page-load', initCookieConsent);
+</script>

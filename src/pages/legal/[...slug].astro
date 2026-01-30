@@ -1,0 +1,165 @@
+---
+import { getCollection } from 'astro:content';
+import PageLayout from '../../layouts/PageLayout.astro';
+
+export async function getStaticPaths() {
+  const legalPages = await getCollection('legal');
+  return legalPages.map((page) => ({
+    params: { slug: page.slug },
+    props: { page },
+  }));
+}
+
+const { page } = Astro.props;
+const { Content } = await page.render();
+
+const formatDate = (date: Date) => {
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+};
+---
+
+<PageLayout
+  title={`${page.data.title} | Creodrop`}
+  description={page.data.description}
+  canonical={`https://creodrop.com/legal/${page.slug}/`}
+>
+  <section class="legal-page">
+    <div class="container">
+      <article class="legal-content">
+        <header class="legal-header">
+          <h1>{page.data.title}</h1>
+          <div class="legal-meta">
+            <p><strong>Effective Date:</strong> {formatDate(page.data.effectiveDate)}</p>
+            <p><strong>Last Updated:</strong> {formatDate(page.data.lastUpdated)}</p>
+          </div>
+        </header>
+        <div class="legal-body">
+          <Content />
+        </div>
+      </article>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .legal-page {
+    padding: calc(var(--spacing-2xl) + 60px) 0 var(--spacing-2xl);
+  }
+
+  .legal-content {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .legal-header {
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .legal-header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.2;
+  }
+
+  .legal-meta {
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+  }
+
+  .legal-meta p {
+    margin: 0;
+  }
+
+  .legal-meta strong {
+    color: var(--color-text-light);
+  }
+
+  .legal-body :global(h2) {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .legal-body :global(h3) {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .legal-body :global(p) {
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .legal-body :global(strong) {
+    color: var(--color-text);
+    font-weight: 600;
+  }
+
+  .legal-body :global(a) {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
+
+  .legal-body :global(a:hover) {
+    color: var(--color-primary-dark);
+  }
+
+  .legal-body :global(ul),
+  .legal-body :global(ol) {
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-lg);
+  }
+
+  .legal-body :global(li) {
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .legal-body :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--spacing-md) 0;
+    font-size: 0.9375rem;
+  }
+
+  .legal-body :global(th),
+  .legal-body :global(td) {
+    padding: var(--spacing-sm);
+    text-align: left;
+    border: 1px solid var(--color-border);
+  }
+
+  .legal-body :global(th) {
+    background: var(--color-bg-alt);
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .legal-body :global(td) {
+    color: var(--color-text-light);
+  }
+
+  .legal-body :global(hr) {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: var(--spacing-xl) 0;
+  }
+</style>

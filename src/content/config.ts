@@ -24,7 +24,18 @@ const docsCollection = defineCollection({
   }),
 });
 
+const legalCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    effectiveDate: z.date(),
+    lastUpdated: z.date(),
+  }),
+});
+
 export const collections = {
   blog: blogCollection,
   docs: docsCollection,
+  legal: legalCollection,
 };

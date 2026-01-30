@@ -21,6 +21,15 @@
         </a>
       </div>
     </div>
+    <div class="footer-legal">
+      <a href="/legal/privacy-policy/" class="footer-legal-link">Privacy Policy</a>
+      <span class="footer-legal-separator" aria-hidden="true">&middot;</span>
+      <a href="/legal/terms-of-service/" class="footer-legal-link">Terms of Service</a>
+      <span class="footer-legal-separator" aria-hidden="true">&middot;</span>
+      <a href="/legal/cookie-policy/" class="footer-legal-link">Cookie Policy</a>
+      <span class="footer-legal-separator" aria-hidden="true">&middot;</span>
+      <a href="/legal/dmca-policy/" class="footer-legal-link">DMCA</a>
+    </div>
     <p class="footer-trademark">
       Drupal is a <a
         href="https://www.drupal.org/about/trademark"
@@ -32,3 +41,31 @@
     </p>
   </div>
 </footer>
+
+<style>
+  .footer-legal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-sm);
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .footer-legal-link {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition);
+  }
+
+  .footer-legal-link:hover {
+    color: var(--color-primary);
+  }
+
+  .footer-legal-separator {
+    color: var(--color-border);
+  }
+</style>
