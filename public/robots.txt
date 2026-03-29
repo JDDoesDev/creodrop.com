@@ -5,3 +5,7 @@ Allow: /
 
 # Sitemap location
 Sitemap: https://creodrop.com/sitemap.xml
+
+# LLMs.txt - structured context for AI models
+# https://llmstxt.org/
+LLMs-Txt: https://creodrop.com/llms.txt
