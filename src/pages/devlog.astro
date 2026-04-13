@@ -15,9 +15,13 @@ import ButtondownForm from '../components/ButtondownForm.astro';
     <div class="container">
       <h1 class="devlog-title">Devlog</h1>
       <p class="devlog-subtitle">
-        Building managed Drupal hosting that doesn't cost a fortune or require a
-        DevOps hire. Raw updates from the build.
+        Creodrop isn't available yet &mdash; we're still building it. This is a
+        look behind the curtain: raw updates, technical decisions, and progress
+        as we work toward launch.
       </p>
+      <div class="devlog-hero-cta">
+        <ButtondownForm showNote={true} />
+      </div>
     </div>
   </section>
 
@@ -143,7 +147,7 @@ import ButtondownForm from '../components/ButtondownForm.astro';
         <div class="devlog-entry-body">
           <p>
             The feature I was most excited about: <code>git push</code> deploys,
-            similar to Pantheon and Platform.sh. New Dockerfiles for the pipeline,
+            similar to other managed Drupal hosts. New Dockerfiles for the pipeline,
             started the image selection system, wrote deployment docs.
           </p>
         </div>
@@ -177,7 +181,7 @@ import ButtondownForm from '../components/ButtondownForm.astro';
           <p>
             After sitting with the product for a while, I decided to go after a
             second market: developers who want SSH access, Git workflows, and real
-            deployment pipelines but don't want to pay Pantheon or Acquia prices.
+            deployment pipelines but don't want to pay enterprise hosting prices.
           </p>
           <p>Started building:</p>
           <ul>
