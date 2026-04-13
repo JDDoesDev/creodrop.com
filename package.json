@@ -9,6 +9,7 @@
     "new-post": "node scripts/new-post.js"
   },
   "dependencies": {
+    "@4hse/astro-llms-txt": "^1.0.4",
     "@astrojs/rss": "^4.0.0",
     "@astrojs/sitemap": "^3.2.0",
     "@pagefind/default-ui": "^1.4.0",

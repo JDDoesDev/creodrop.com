@@ -1392,6 +1392,211 @@ input, button {
 }
 
 /* -----------------------------------------------------------------------------
+   Devlog
+   ----------------------------------------------------------------------------- */
+.devlog-hero {
+    padding: calc(var(--spacing-2xl) + 60px) 0 var(--spacing-xl);
+    background: var(--color-bg-alt);
+    text-align: center;
+}
+
+.devlog-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-sm);
+}
+
+.devlog-subtitle {
+    font-size: 1.125rem;
+    color: var(--color-text-light);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.devlog-content {
+    padding: var(--spacing-xl) 0 var(--spacing-2xl);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.devlog-entry {
+    border-left: 3px solid var(--color-primary);
+    padding-left: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+}
+
+.devlog-entry-header {
+    margin-bottom: var(--spacing-sm);
+}
+
+.devlog-date {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.devlog-entry-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.devlog-entry-body {
+    font-size: 0.9375rem;
+    color: var(--color-text-light);
+    line-height: 1.6;
+}
+
+.devlog-entry-body p {
+    margin-bottom: var(--spacing-sm);
+}
+
+.devlog-entry-body p:last-child {
+    margin-bottom: 0;
+}
+
+.devlog-entry-body ul {
+    margin: var(--spacing-sm) 0;
+    padding-left: 1.25rem;
+}
+
+.devlog-entry-body li {
+    margin-bottom: 0.25rem;
+    font-size: 0.9375rem;
+    color: var(--color-text-light);
+    line-height: 1.5;
+}
+
+.devlog-entry-body code {
+    font-size: 0.85em;
+    background: var(--color-bg-alt);
+    padding: 0.15em 0.35em;
+    border-radius: var(--radius-sm);
+}
+
+/* Devlog Status Section */
+.devlog-status {
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-alt);
+    border-radius: var(--radius-md);
+}
+
+.devlog-status-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-xs);
+}
+
+.devlog-status-date {
+    font-size: 0.875rem;
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-md);
+}
+
+.devlog-status p:last-child {
+    margin-top: var(--spacing-md);
+    font-size: 0.9375rem;
+    color: var(--color-text-light);
+}
+
+.devlog-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+    margin-bottom: 0;
+}
+
+.devlog-table th {
+    text-align: left;
+    font-weight: 600;
+    color: var(--color-text);
+    padding: 0.5rem 0.75rem;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.devlog-table td {
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text-light);
+}
+
+.devlog-status-badge {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: var(--radius-full);
+}
+
+.devlog-status-badge--prod {
+    background: #d1fae5;
+    color: #047857;
+}
+
+.devlog-status-badge--dev {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+/* Devlog Stats */
+.devlog-stats {
+    margin-bottom: var(--spacing-xl);
+}
+
+.devlog-stats-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-md);
+}
+
+.devlog-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--spacing-sm);
+}
+
+.devlog-stat {
+    background: var(--color-bg-alt);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+}
+
+.devlog-stat dt {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-light);
+    margin-bottom: 0.125rem;
+}
+
+.devlog-stat dd {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-text);
+}
+
+@media (prefers-color-scheme: dark) {
+    .devlog-status-badge--prod {
+        background: #064e3b;
+        color: #6ee7b7;
+    }
+
+    .devlog-status-badge--dev {
+        background: #1e3a5f;
+        color: #93c5fd;
+    }
+}
+
+/* -----------------------------------------------------------------------------
    Dark Mode
    ----------------------------------------------------------------------------- */
 @media (prefers-color-scheme: dark) {

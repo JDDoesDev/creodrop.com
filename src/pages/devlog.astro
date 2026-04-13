@@ -1,0 +1,499 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import ButtondownForm from '../components/ButtondownForm.astro';
+---
+
+<PageLayout
+  title="Devlog - Creodrop | Building in Public"
+  description="Follow along as we build Creodrop. Raw updates, technical decisions, and behind-the-scenes progress on our managed Drupal hosting platform."
+  canonical="https://creodrop.com/devlog/"
+  ogTitle="Devlog - Creodrop"
+  ogDescription="Follow along as we build Creodrop. Raw updates, technical decisions, and behind-the-scenes progress."
+>
+  <!-- Devlog Hero -->
+  <section class="devlog-hero">
+    <div class="container">
+      <h1 class="devlog-title">Devlog</h1>
+      <p class="devlog-subtitle">
+        Building managed Drupal hosting that doesn't cost a fortune or require a
+        DevOps hire. Raw updates from the build.
+      </p>
+    </div>
+  </section>
+
+  <!-- Status Section -->
+  <section class="devlog-content">
+    <div class="container">
+
+      <div class="devlog-status">
+        <h2 class="devlog-status-title">Where things stand</h2>
+        <p class="devlog-status-date">April 13, 2026</p>
+
+        <table class="devlog-table">
+          <thead>
+            <tr>
+              <th>Component</th>
+              <th>Tech</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>API</td><td>Node.js + Express + TypeScript</td><td><span class="devlog-status-badge devlog-status-badge--prod">Production</span></td></tr>
+            <tr><td>Control panel</td><td>Next.js 16 + shadcn/ui + Tailwind</td><td><span class="devlog-status-badge devlog-status-badge--prod">Production</span></td></tr>
+            <tr><td>Admin panel</td><td>Next.js + shadcn/ui</td><td><span class="devlog-status-badge devlog-status-badge--prod">Production</span></td></tr>
+            <tr><td>SSH gateway</td><td>Go</td><td><span class="devlog-status-badge devlog-status-badge--dev">Development</span></td></tr>
+            <tr><td>CLI</td><td>Node.js (@creodrop/cli)</td><td><span class="devlog-status-badge devlog-status-badge--dev">Development</span></td></tr>
+            <tr><td>Drupal image</td><td>PHP 8.4 + Nginx + Supervisord</td><td><span class="devlog-status-badge devlog-status-badge--prod">Production</span></td></tr>
+            <tr><td>Admin guide</td><td>Astro</td><td><span class="devlog-status-badge devlog-status-badge--dev">Development</span></td></tr>
+            <tr><td>Infrastructure</td><td>Docker Compose + Traefik v3.6</td><td><span class="devlog-status-badge devlog-status-badge--prod">Production</span></td></tr>
+            <tr><td>Platform DB</td><td>PostgreSQL 16</td><td><span class="devlog-status-badge devlog-status-badge--prod">Production</span></td></tr>
+            <tr><td>Tenant DB</td><td>MySQL 8.0</td><td><span class="devlog-status-badge devlog-status-badge--prod">Production</span></td></tr>
+            <tr><td>Cache/Queue</td><td>Redis + BullMQ</td><td><span class="devlog-status-badge devlog-status-badge--prod">Production</span></td></tr>
+          </tbody>
+        </table>
+
+        <p>Production lives on a Linode 8GB in Chicago: panel.creodrop.com, api.creodrop.com, demo.creodrop.com.</p>
+      </div>
+
+      <div class="devlog-stats">
+        <h3 class="devlog-stats-title">By the numbers</h3>
+        <dl class="devlog-stats-grid">
+          <div class="devlog-stat">
+            <dt>First commit</dt>
+            <dd>January 2, 2026</dd>
+          </div>
+          <div class="devlog-stat">
+            <dt>Days with commits</dt>
+            <dd>25</dd>
+          </div>
+          <div class="devlog-stat">
+            <dt>Total commits</dt>
+            <dd>130+</dd>
+          </div>
+          <div class="devlog-stat">
+            <dt>Services</dt>
+            <dd>7</dd>
+          </div>
+          <div class="devlog-stat">
+            <dt>Languages</dt>
+            <dd>TypeScript, Go, PHP, SQL, Shell</dd>
+          </div>
+          <div class="devlog-stat">
+            <dt>Unit tests</dt>
+            <dd>159</dd>
+          </div>
+          <div class="devlog-stat">
+            <dt>Worst day</dt>
+            <dd>Jan 17 &mdash; first prod deploy, 9 fix commits</dd>
+          </div>
+          <div class="devlog-stat">
+            <dt>Biggest day</dt>
+            <dd>Feb 3 &mdash; three admin panel phases in one session</dd>
+          </div>
+          <div class="devlog-stat">
+            <dt>Container theme</dt>
+            <dd>UFO / Project Blue Book</dd>
+          </div>
+        </dl>
+      </div>
+
+      <h2 class="visually-hidden">Timeline</h2>
+
+      <article class="devlog-entry">
+        <div class="devlog-entry-header">
+          <time class="devlog-date" datetime="2026-04-06">April 6, 2026</time>
+          <h3 class="devlog-entry-title">Local dev DNS</h3>
+        </div>
+        <div class="devlog-entry-body">
+          <p>
+            Added dnsmasq for wildcard DNS so <code>*.creodrop.local</code> just works
+            without editing <code>/etc/hosts</code> for every new site. Had to fight
+            systemd-resolved over port 53, fixed it by disabling the stub listener.
+          </p>
+          <p>Local dev now runs at <code>*.creodrop.local:8880</code>.</p>
+        </div>
+      </article>
+
+      <article class="devlog-entry">
+        <div class="devlog-entry-header">
+          <time class="devlog-date" datetime="2026-04-04">April 4, 2026</time>
+          <h3 class="devlog-entry-title">Everything day</h3>
+        </div>
+        <div class="devlog-entry-body">
+          <p>A lot landed at once:</p>
+          <p>
+            S3 storage for site backups. Soft delete with 30-day retention so deleted
+            sites aren't immediately gone. Environment sync UI. Forgot-password flow.
+            Admin bypass for impersonating users (support tool). Account management
+            and domain pages in the admin panel. Multi-target Dockerfile for optimized
+            builds. Error boundaries across the control panel. SSH gateway updates.
+          </p>
+          <p>
+            Also wrote a full QA test plan and updated the admin guide to cover all
+            the new features.
+          </p>
+        </div>
+      </article>
+
+      <article class="devlog-entry">
+        <div class="devlog-entry-header">
+          <time class="devlog-date" datetime="2026-03-31">March 31, 2026</time>
+          <h3 class="devlog-entry-title">Git push-to-deploy</h3>
+        </div>
+        <div class="devlog-entry-body">
+          <p>
+            The feature I was most excited about: <code>git push</code> deploys,
+            similar to Pantheon and Platform.sh. New Dockerfiles for the pipeline,
+            started the image selection system, wrote deployment docs.
+          </p>
+        </div>
+      </article>
+
+      <article class="devlog-entry">
+        <div class="devlog-entry-header">
+          <time class="devlog-date" datetime="2026-03-30">March 30, 2026</time>
+          <h3 class="devlog-entry-title">Redis, queues, and deploy promotion</h3>
+        </div>
+        <div class="devlog-entry-body">
+          <p>
+            Connected Redis (<code>bluebook-mothman</code>) for caching and as the
+            BullMQ job queue backend. Replaced <code>console.log</code> with
+            structured logging. Built the deploy promotion system so deployments can
+            move between environments (dev &rarr; staging &rarr; production).
+          </p>
+          <p>
+            Started the admin guide as an Astro docs site, and ran an architecture
+            review to find gaps before building more.
+          </p>
+        </div>
+      </article>
+
+      <article class="devlog-entry">
+        <div class="devlog-entry-header">
+          <time class="devlog-date" datetime="2026-03-29">March 29, 2026</time>
+          <h3 class="devlog-entry-title">Developer tier pivot</h3>
+        </div>
+        <div class="devlog-entry-body">
+          <p>
+            After sitting with the product for a while, I decided to go after a
+            second market: developers who want SSH access, Git workflows, and real
+            deployment pipelines but don't want to pay Pantheon or Acquia prices.
+          </p>
+          <p>Started building:</p>
+          <ul>
+            <li>
+              An SSH gateway in Go (<code>ssh-gateway/</code>, container:
+              <code>bluebook-area51</code>). Chose Go over Node.js for concurrency
+              since this service routes SSH connections to the right Drupal container
+              based on a <code>{'{shortUuid}-{env}'}</code> username format.
+            </li>
+            <li>A CLI tool (<code>cli/</code>, published as <code>@creodrop/cli</code>).</li>
+            <li>
+              The first unit tests. These eventually grew to 159, covering presets,
+              Docker naming, MySQL naming, SSH keys, deploy tokens, git config, and
+              deploy log sanitization.
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="devlog-entry">
+        <div class="devlog-entry-header">
+          <time class="devlog-date" datetime="2026-02-13">February 13, 2026</time>
+          <h3 class="devlog-entry-title">Admin panel polish</h3>
+        </div>
+        <div class="devlog-entry-body">
+          <p>
+            Went back and tightened up the platform management features from the
+            February 3 sprint. Rough edges from building that fast.
+          </p>
+        </div>
+      </article>
+
+      <article class="devlog-entry">
+        <div class="devlog-entry-header">
+          <time class="devlog-date" datetime="2026-02-03">February 3, 2026</time>
+          <h3 class="devlog-entry-title">Admin panel build day</h3>
+        </div>
+        <div class="devlog-entry-body">
+          <p>Finished three full phases in one session. This was a long day.</p>
+          <p>
+            <strong>Phase 2</strong> (the app itself): admin auth via NextAuth, login
+            page with rate limit countdown, collapsible sidebar, dashboard with
+            metrics and charts, audit log viewer with filters and modals, provisioning
+            history.
+          </p>
+          <p>
+            <strong>Phase 3</strong> (platform management): customer list with search
+            and filters, customer detail pages with tabs, customer actions (suspend,
+            delete, etc.), site list and detail pages, container health status, site
+            restart, streaming container logs, soft delete.
+          </p>
+          <p>
+            <strong>Phase 4</strong> (monitoring): health service pulling
+            CPU/memory/disk metrics, monitoring dashboard with color-coded thresholds,
+            alert rule system with CRUD API and an evaluation engine, email
+            notifications via Resend, alert rule wizard UI, alert history page.
+          </p>
+        </div>
+      </article>
+
+      <article class="devlog-entry">
+        <div class="devlog-entry-header">
+          <time class="devlog-date" datetime="2026-02-02">February 2, 2026</time>
+          <h3 class="devlog-entry-title">Admin panel planning and foundation</h3>
+        </div>
+        <div class="devlog-entry-body">
+          <p>
+            Shifted to the admin panel, the internal tool for actually running the
+            platform. Did the planning first: v1 requirements, a 4-phase roadmap.
+            Then built Phase 1:
+          </p>
+          <ul>
+            <li>Database migrations for admin flags and audit logs</li>
+            <li>Admin/audit operations in the PostgreSQL service</li>
+            <li>Rate limiting on the login endpoint</li>
+            <li><code>ADMIN_EMAIL</code> config to bootstrap the first admin user</li>
+            <li><code>requireAdmin</code> middleware</li>
+            <li>Audit logging middleware</li>
+          </ul>
+          <p>Started on Phase 2's dashboard stats queries before stopping for the day.</p>
+        </div>
+      </article>
+
+      <article class="devlog-entry">
+        <div class="devlog-entry-header">
+          <time class="devlog-date" datetime="2026-01-28">January 28, 2026</time>
+          <h3 class="devlog-entry-title">Account management</h3>
+        </div>
+        <div class="devlog-entry-body">
+          <p>
+            Cleaned up account management on both the API and dashboard sides. Users
+            could now manage their details and view their sites without the interface
+            fighting them.
+          </p>
+        </div>
+      </article>
+
+      <article class="devlog-entry">
+        <div class="devlog-entry-header">
+          <time class="devlog-date" datetime="2026-01-26">January 26, 2026</time>
+          <h3 class="devlog-entry-title">Google and GitHub OAuth</h3>
+        </div>
+        <div class="devlog-entry-body">
+          <p>
+            Added social login through NextAuth.js v5, Google and GitHub providers.
+            Built the OAuth user lookup endpoint, wired up buttons on the login and
+            registration pages, re-enabled email verification on prod.
+          </p>
+          <p>
+            Also gave Redis its container name: <code>bluebook-mothman</code>. Actual
+            Redis integration came later.
+          </p>
+        </div>
+      </article>
+
+      <article class="devlog-entry">
+        <div class="devlog-entry-header">
+          <time class="devlog-date" datetime="2026-01-25">January 25, 2026</time>
+          <h3 class="devlog-entry-title">Site provisioning works</h3>
+        </div>
+        <div class="devlog-entry-body">
+          <p>
+            This was the day the product loop closed. You could sign up, create a
+            Drupal site, and see it running. Auth worked on prod, unauthenticated
+            users got redirected properly, status badges showed up on site cards,
+            custom domains worked, and Drupal's trusted host patterns were configured.
+          </p>
+          <p>Not pretty yet, but functional end-to-end.</p>
+        </div>
+      </article>
+
+      <article class="devlog-entry">
+        <div class="devlog-entry-header">
+          <time class="devlog-date" datetime="2026-01-24">January 24, 2026</time>
+          <h3 class="devlog-entry-title">Auth on production</h3>
+        </div>
+        <div class="devlog-entry-body">
+          <p>
+            Same problems, different environment. Tested the auth flow end-to-end on
+            prod, fixed redirect issues (the "sighting redirect", staying on theme),
+            debugged header forwarding through Traefik, and switched from JWE to plain
+            JWT. Simpler, fewer things to break.
+          </p>
+          <p>
+            Commit message of the day: "need moar bits", which turned out to be a key
+            size issue.
+          </p>
+        </div>
+      </article>
+
+      <article class="devlog-entry">
+        <div class="devlog-entry-header">
+          <time class="devlog-date" datetime="2026-01-23">January 23, 2026</time>
+          <h3 class="devlog-entry-title">Auth debugging</h3>
+        </div>
+        <div class="devlog-entry-body">
+          <p>
+            A full day fighting authentication. Drupal site path routing was broken,
+            dev URLs needed securing, and I went back and forth on JWT vs JWE before
+            settling on an approach. The commit message "back to working dev" says it all.
+          </p>
+        </div>
+      </article>
+
+      <article class="devlog-entry">
+        <div class="devlog-entry-header">
+          <time class="devlog-date" datetime="2026-01-22">January 22, 2026</time>
+          <h3 class="devlog-entry-title">DNS and domains</h3>
+        </div>
+        <div class="devlog-entry-body">
+          <p>
+            Added a DNS settings UI, fixed domain routing on production, and wrote
+            instruction pages so users know how to point their domains. Some general
+            dashboard cleanup too.
+          </p>
+        </div>
+      </article>
+
+      <article class="devlog-entry">
+        <div class="devlog-entry-header">
+          <time class="devlog-date" datetime="2026-01-20">January 20, 2026</time>
+          <h3 class="devlog-entry-title">Email verification</h3>
+        </div>
+        <div class="devlog-entry-body">
+          <p>
+            New users now get a verification link via Resend before their account
+            activates. Straightforward but necessary.
+          </p>
+        </div>
+      </article>
+
+      <article class="devlog-entry">
+        <div class="devlog-entry-header">
+          <time class="devlog-date" datetime="2026-01-18">January 18, 2026</time>
+          <h3 class="devlog-entry-title">API security</h3>
+        </div>
+        <div class="devlog-entry-body">
+          <p>
+            Locked down the API for production: security headers, access controls. The
+            kind of thing you forget until your site is public.
+          </p>
+        </div>
+      </article>
+
+      <article class="devlog-entry">
+        <div class="devlog-entry-header">
+          <time class="devlog-date" datetime="2026-01-17">January 17, 2026</time>
+          <h3 class="devlog-entry-title">First production deploy</h3>
+        </div>
+        <div class="devlog-entry-body">
+          <p>
+            The day everything had to work on a real server. Nine commits, each one
+            fixing whatever broke next:
+          </p>
+          <ul>
+            <li>Docker config mismatches (twice)</li>
+            <li>Traefik routing failures, needed a version bump</li>
+            <li>PostgreSQL healthcheck pointed at the wrong database name</li>
+            <li>Local defaults didn't match production</li>
+            <li>SSL certificate issues</li>
+            <li>API routing through Traefik needed restructuring</li>
+            <li>Traefik dashboard was wide open</li>
+          </ul>
+          <p>
+            By end of day, <code>panel.creodrop.com</code> and
+            <code>api.creodrop.com</code> were live on Linode. Exhausting, but it
+            worked.
+          </p>
+        </div>
+      </article>
+
+      <article class="devlog-entry">
+        <div class="devlog-entry-header">
+          <time class="devlog-date" datetime="2026-01-12">January 12&ndash;13, 2026</time>
+          <h3 class="devlog-entry-title">Account and site flows</h3>
+        </div>
+        <div class="devlog-entry-body">
+          <p>
+            Built out account settings and the site creation wizard. A user could now
+            walk through setting up a Drupal site from the dashboard, even if nothing
+            happened on the backend yet.
+          </p>
+        </div>
+      </article>
+
+      <article class="devlog-entry">
+        <div class="devlog-entry-header">
+          <time class="devlog-date" datetime="2026-01-07">January 7&ndash;9, 2026</time>
+          <h3 class="devlog-entry-title">Control panel takes shape</h3>
+        </div>
+        <div class="devlog-entry-body">
+          <p>
+            The customer-facing Next.js dashboard got its first real pages: login,
+            registration, dashboard layout, DNS docs, migration files, account and
+            site setup. The container earned its name: <code>bluebook-mkultra</code>.
+          </p>
+        </div>
+      </article>
+
+      <article class="devlog-entry">
+        <div class="devlog-entry-header">
+          <time class="devlog-date" datetime="2026-01-06">January 6, 2026</time>
+          <h3 class="devlog-entry-title">API sprint</h3>
+        </div>
+        <div class="devlog-entry-body">
+          <p>
+            Built most of the API endpoints in one sitting. Express + TypeScript,
+            handling site provisioning, user management, all the CRUD. Also started
+            the control panel frontend the same day.
+          </p>
+        </div>
+      </article>
+
+      <article class="devlog-entry">
+        <div class="devlog-entry-header">
+          <time class="devlog-date" datetime="2026-01-04">January 4, 2026</time>
+          <h3 class="devlog-entry-title">Infrastructure starter</h3>
+        </div>
+        <div class="devlog-entry-body">
+          <p>
+            Got Docker Compose wired up with the initial service definitions and
+            networking. Named the first three containers:
+          </p>
+          <ul>
+            <li><code>bluebook-airspace</code> (Traefik reverse proxy)</li>
+            <li><code>bluebook-hangar18</code> (MySQL for tenant databases)</li>
+            <li><code>bluebook-majestic</code> (PostgreSQL for the platform database)</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="devlog-entry">
+        <div class="devlog-entry-header">
+          <time class="devlog-date" datetime="2026-01-02">January 2, 2026</time>
+          <h3 class="devlog-entry-title">First commit</h3>
+        </div>
+        <div class="devlog-entry-body">
+          <p>
+            Started the repo. Codename: Project Blue Book. The UFO/high-strangeness
+            naming convention for containers started as a joke and just... stuck.
+          </p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="container">
+      <h2 class="cta-title">Want to follow the journey?</h2>
+      <p class="cta-subtitle">
+        Subscribe for updates as we build Creodrop in public.
+      </p>
+
+      <ButtondownForm class="cta-form" />
+    </div>
+  </section>
+</PageLayout>

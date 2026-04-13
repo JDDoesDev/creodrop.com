@@ -27,6 +27,7 @@ src/
 │   ├── Header.astro
 │   ├── Footer.astro
 │   ├── ButtondownForm.astro
+│   ├── CookieConsent.astro  # Cookie consent banner
 │   ├── DocsSearch.astro     # Pagefind search for docs
 │   ├── DocsSidebar.astro    # Docs navigation sidebar
 │   ├── CodeBlock.astro      # Code with copy button
@@ -41,14 +42,20 @@ src/
 │   ├── index.astro
 │   ├── roadmap.astro
 │   ├── rss.xml.js
+│   ├── og-image.png.ts      # Dynamic OG image generation
 │   ├── blog/
-│   └── docs/
-│       ├── index.astro      # Docs landing page
-│       └── [...slug].astro  # Dynamic doc pages
+│   │   ├── index.astro
+│   │   └── [...slug].astro
+│   ├── docs/
+│   │   ├── index.astro      # Docs landing page
+│   │   └── [...slug].astro  # Dynamic doc pages
+│   └── legal/
+│       └── [...slug].astro  # Legal pages (privacy, terms, etc.)
 ├── content/
 │   ├── config.ts            # Content collection schemas
 │   ├── blog/
-│   └── docs/                # Documentation markdown files
+│   ├── docs/                # Documentation markdown files
+│   └── legal/               # Legal pages (privacy, terms, DMCA, cookies)
 └── styles/
     └── global.css
 ```

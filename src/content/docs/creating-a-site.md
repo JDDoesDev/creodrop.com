@@ -58,6 +58,26 @@ Best for developers and agencies who need CLI access and multiple environments.
 
 See [Developer Tier](/docs/developer-tier) for details on multi-environment features.
 
+## Step 3b: Choose a Starting Image (Developer Tier)
+
+If you selected the Developer plan, you will see a **Base Image** selector with three options:
+
+### Creodrop Drupal CMS (Default)
+
+The full Drupal CMS distribution with Redis caching, Drush, and platform settings pre-configured. Best for most new projects.
+
+### Vanilla Drupal 11
+
+A clean Drupal 11 installation using the official `drupal/recommended-project` template. Includes Drush and the Redis module but no Creodrop-specific customizations. Best for developers who want a blank slate.
+
+### Bring Your Own Code
+
+An empty runtime with PHP, Nginx, Composer, and git -- no Drupal code. Push your existing Drupal codebase via git and the deploy pipeline handles the rest. Best for migrating from another hosting provider.
+
+After pushing code for the first time, the deploy pipeline runs `composer install`, database updates, and cache rebuilds automatically.
+
+This option is only available for Developer tier sites. Other plans always use the Creodrop Drupal CMS image.
+
 ## Step 4: Wait for Provisioning
 
 After clicking **Create Site**, Creodrop provisions your site automatically. This includes:

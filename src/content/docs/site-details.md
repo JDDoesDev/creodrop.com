@@ -39,6 +39,33 @@ Each environment card shows its URL, status, and a restart button. Environments 
 
 See [Developer Tier](/docs/developer-tier) for more on multi-environment workflows.
 
+### SSH Access Card
+
+Below the environments panel, an **SSH Access** card shows the connection string for each environment:
+
+```
+ssh a1b2c3d4-dev@ssh.creodrop.com -p 2222
+ssh a1b2c3d4-stage@ssh.creodrop.com -p 2222
+ssh a1b2c3d4-prod@ssh.creodrop.com -p 2222
+```
+
+Each line has a copy button. You must add your SSH public key in [Account Settings](/docs/account-settings) before connecting.
+
+### Developer Tools Panel
+
+Below the SSH card, a **Developer Tools** panel lets you run commands directly from the browser:
+
+- **Quick actions** -- One-click buttons for common operations:
+  - **Cache Rebuild** -- Runs `drush cache:rebuild`
+  - **Login Link** -- Runs `drush uli` to generate a one-time login URL
+  - **Config Export** -- Runs `drush config:export`
+- **Environment selector** -- Choose which environment (dev, stage, prod) to run commands against
+- **Custom command input** -- Type any allowed command and press Enter or click Run
+- **Output display** -- Shows command output, exit code, and execution duration
+- **Download Drush Aliases** -- Downloads a `.yml` file for using native `drush @alias` commands from your local machine
+
+See [Creodrop CLI](/docs/cli) for the full command-line tool.
+
 ## Site Details Section
 
 ### Platform URL
