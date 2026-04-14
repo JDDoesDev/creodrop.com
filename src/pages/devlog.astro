@@ -31,7 +31,7 @@ import ButtondownForm from '../components/ButtondownForm.astro';
 
       <div class="devlog-status">
         <h2 class="devlog-status-title">Where things stand</h2>
-        <p class="devlog-status-date">April 13, 2026</p>
+        <p class="devlog-status-date">April 14, 2026</p>
 
         <table class="devlog-table">
           <thead>
@@ -72,7 +72,7 @@ import ButtondownForm from '../components/ButtondownForm.astro';
           </div>
           <div class="devlog-stat">
             <dt>Total commits</dt>
-            <dd>130+</dd>
+            <dd>140+</dd>
           </div>
           <div class="devlog-stat">
             <dt>Services</dt>
@@ -83,8 +83,8 @@ import ButtondownForm from '../components/ButtondownForm.astro';
             <dd>TypeScript, Go, PHP, SQL, Shell</dd>
           </div>
           <div class="devlog-stat">
-            <dt>Unit tests</dt>
-            <dd>159</dd>
+            <dt>Tests</dt>
+            <dd>159 unit + Playwright e2e suite</dd>
           </div>
           <div class="devlog-stat">
             <dt>Worst day</dt>
@@ -102,6 +102,45 @@ import ButtondownForm from '../components/ButtondownForm.astro';
       </div>
 
       <h2 class="visually-hidden">Timeline</h2>
+
+      <article class="devlog-entry">
+        <div class="devlog-entry-header">
+          <time class="devlog-date" datetime="2026-04-14">April 14, 2026</time>
+          <h3 class="devlog-entry-title">Production hardening and e2e tests</h3>
+        </div>
+        <div class="devlog-entry-body">
+          <p>A full day of production prep across the stack.</p>
+          <p>
+            <strong>Testing:</strong> added a Playwright e2e suite covering the
+            full platform &mdash; signup, site creation, deploys, admin flows,
+            the works. Catching regressions before users do.
+          </p>
+          <p>
+            <strong>Infrastructure:</strong> rewrote the production
+            <code>deploy.sh</code> to use <code>IMAGE_TAG</code> and
+            <code>DOCKER_GID</code> for cleaner image pinning and container
+            permissions. Dropped dnsmasq from production &mdash; it's a
+            local-dev-only convenience.
+          </p>
+          <p>
+            <strong>Tenant isolation:</strong> refactored Redis so each site gets
+            its own key prefix instead of relying on <code>DB SELECT</code>. More
+            scalable and plays nicer with managed Redis. The Drupal image now
+            honors the prefix for cache isolation too, plus fixes for the
+            installer redirect and dev-mode cookies.
+          </p>
+          <p>
+            <strong>Fixes and DX:</strong> SSH gateway now exits exec cleanly
+            when command output ends (was hanging on stdin close). The control
+            panel detects production via <code>APP_ENV</code> instead of
+            <code>NODE_ENV</code>. The API cancels stale redis-enable jobs on
+            site delete and hides soft-deleted sites from listings. Auth
+            auto-promotes <code>ADMIN_EMAIL</code> on register/login, and
+            dev-mode deploy endpoints skip branch/tag validation so local
+            testing doesn't fight you.
+          </p>
+        </div>
+      </article>
 
       <article class="devlog-entry">
         <div class="devlog-entry-header">
